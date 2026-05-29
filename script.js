@@ -38,6 +38,11 @@
     mobileMenu.classList.remove('open');
   }
 
+  // Gdy użytkownik zmienia orientację / szerokość ekranu, nie zostawiamy otwartego menu.
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 960) closeMobile();
+  });
+
   // INTERSECTION OBSERVER
   const cards = document.querySelectorAll('.service-card, .machine-card');
   const cardObserver = new IntersectionObserver((entries) => {
@@ -202,6 +207,8 @@
     });
 
     // Main marker
+    // Na telefonach i tabletach nie pokazujemy karty popup nad bazą.
+    const isTouchLayout = window.matchMedia('(max-width: 960px)').matches;
     const mainPopup = `<div style="font-family:Oswald,sans-serif;padding:6px 2px;">
       <div style="font-size:1rem;font-weight:700;color:#F5A623;">🏭 ŻWIROWNIA SKIEBLEWO</div>
       <div style="font-size:0.78rem;color:#333;margin-top:4px;">P.U.H. DROGMET · Lipsk</div>
@@ -209,10 +216,14 @@
       <a href="tel:784103957" style="display:block;margin-top:8px;background:#F5A623;color:#1e1e1e;padding:5px 10px;text-align:center;text-decoration:none;font-weight:700;font-size:0.82rem;border-radius:3px;">📞 784 103 957</a>
     </div>`;
 
-    L.marker([53.7581, 23.4215], { icon: pulseIcon })
-      .bindPopup(mainPopup, { maxWidth: 220 })
-      .addTo(map)
-      .openPopup();
+    const mainMarker = L.marker([53.7581, 23.4215], { icon: pulseIcon })
+      .addTo(map);
+
+    if (!isTouchLayout) {
+      mainMarker
+        .bindPopup(mainPopup, { maxWidth: 220 })
+        .openPopup();
+    }
 
     // City markers
     const cities = [
@@ -224,18 +235,16 @@
     ];
 
     cities.forEach(c => {
-      L.marker(c.coords, { icon: cityIcon })
-        .bindPopup(`<div style="font-family:Oswald,sans-serif;padding:4px 2px;">
-          <div style="font-weight:700;font-size:0.95rem;color:#1e1e1e;">${c.name}</div>
-          <div style="font-size:0.75rem;color:#888;margin-top:3px;">Obszar obsługi · ${c.dist}</div>
-        </div>`, { maxWidth: 180 })
+      // Punkty miast są tylko wizualne — bez popupów i bez klikalności.
+      L.marker(c.coords, { icon: cityIcon, interactive: false })
         .addTo(map);
 
       // Draw line from HQ to city
       L.polyline([[53.7581, 23.4215], c.coords], {
         color: 'rgba(245,166,35,0.45)',
         weight: 2,
-        dashArray: '8,6'
+        dashArray: '8,6',
+        interactive: false
       }).addTo(map);
     });
 
@@ -290,8 +299,7 @@
   }
 
 // ================================================================
-//  GALERIA v2 — zastąp poprzedni blok galerii na końcu script.js
-//  (usuń poprzedni kod zaczynający się od "(function() {" aż do "})();" )
+//  GALERIA v3 — mobile/tablet: kategorie startują zwinięte do 4 zdjęć
 // ================================================================
 
 (function() {
@@ -299,13 +307,105 @@
 
   var grid       = document.getElementById('galleryGrid');
   var toggleBtn  = document.getElementById('galleryToggleBtn');
+  var filterBtns = document.querySelectorAll('.gf-btn');
   var isExpanded = false;
+  var currentFilter = 'all';
+  var MOBILE_QUERY = '(max-width: 960px)';
+  var MOBILE_LIMIT = 4;
 
-  // Start zwinięty
-  if (grid) grid.classList.add('collapsed');
+  if (!grid) return;
+
+  var galleryItems = Array.prototype.slice.call(document.querySelectorAll('.gallery-item'));
+
+  function isMobileTablet() {
+    return window.matchMedia(MOBILE_QUERY).matches;
+  }
+
+  function getMatchingItems() {
+    return galleryItems.filter(function(item) {
+      var cat = item.getAttribute('data-cat');
+      return currentFilter === 'all' || cat === currentFilter;
+    });
+  }
+
+  function animateItems(items) {
+    items.forEach(function(item, i) {
+      if (!item.classList.contains('gi-visible')) {
+        item.style.animationDelay = ((i % 10) * 0.05) + 's';
+        item.classList.add('gi-visible');
+      }
+    });
+  }
+
+  function updateToggle(matchingCount, mobile) {
+    if (!toggleBtn) return;
+    var toggleWrap = toggleBtn.parentElement;
+
+    if (mobile) {
+      // Na telefonach/tabletach przycisk pojawia się tylko wtedy,
+      // gdy w danej kategorii faktycznie jest więcej niż 4 zdjęcia.
+      if (matchingCount <= MOBILE_LIMIT) {
+        toggleBtn.style.display = 'none';
+        if (toggleWrap) toggleWrap.style.display = 'none';
+        toggleBtn.classList.remove('expanded');
+        return;
+      }
+
+      if (toggleWrap) toggleWrap.style.display = 'flex';
+      toggleBtn.style.display = 'inline-flex';
+      toggleBtn.querySelector('.gt-label').textContent = isExpanded ? 'Pokaż mniej' : 'Pokaż więcej';
+      toggleBtn.classList.toggle('expanded', isExpanded);
+      return;
+    }
+
+    // Desktop zostaje bez zasady limitu 4 zdjęć.
+    if (toggleWrap) toggleWrap.style.display = 'flex';
+    toggleBtn.style.display = 'inline-flex';
+    toggleBtn.querySelector('.gt-label').textContent = isExpanded ? 'Pokaż mniej' : 'Pokaż wszystkie zdjęcia';
+    toggleBtn.classList.toggle('expanded', isExpanded);
+  }
+
+  function applyGalleryState(shouldAnimate) {
+    var mobile = isMobileTablet();
+    var matching = getMatchingItems();
+
+    grid.classList.toggle('gallery-mobile-mode', mobile);
+    grid.classList.toggle('collapsed', !isExpanded);
+
+    galleryItems.forEach(function(item) {
+      var cat = item.getAttribute('data-cat');
+      var matches = currentFilter === 'all' || cat === currentFilter;
+
+      item.classList.toggle('gi-hidden', !matches);
+      item.classList.remove('mobile-limit-hidden');
+    });
+
+    if (mobile && !isExpanded) {
+      matching.forEach(function(item, index) {
+        if (index >= MOBILE_LIMIT) item.classList.add('mobile-limit-hidden');
+      });
+    }
+
+    updateToggle(matching.length, mobile);
+
+    if (shouldAnimate) {
+      var visible = matching.filter(function(item) {
+        return !item.classList.contains('mobile-limit-hidden');
+      });
+      visible.forEach(function(item, i) {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(14px) scale(0.97)';
+        item.style.animationDelay = (i * 0.05) + 's';
+        item.classList.remove('gi-visible');
+        void item.offsetWidth;
+        item.classList.add('gi-visible');
+      });
+    }
+
+    rebuildVisibleList();
+  }
 
   // ── INTERSECTION OBSERVER dla kafli ──
-  var galleryItems = document.querySelectorAll('.gallery-item');
   if (galleryItems.length) {
     var giObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
@@ -322,26 +422,12 @@
   }
 
   // ── PRZYCISK POKAŻ WIĘCEJ / MNIEJ ──
-  if (toggleBtn && grid) {
+  if (toggleBtn) {
     toggleBtn.addEventListener('click', function() {
       isExpanded = !isExpanded;
+      applyGalleryState(true);
 
-      if (isExpanded) {
-        grid.classList.remove('collapsed');
-        toggleBtn.querySelector('.gt-label').textContent = 'Pokaż mniej';
-        toggleBtn.classList.add('expanded');
-
-        // Animuj nowo pokazane kafle
-        var hidden = grid.querySelectorAll('.gallery-item:not(.gi-visible):not(.gi-hidden)');
-        hidden.forEach(function(item, i) {
-          item.style.animationDelay = (i * 0.05) + 's';
-          item.classList.add('gi-visible');
-        });
-      } else {
-        grid.classList.add('collapsed');
-        toggleBtn.querySelector('.gt-label').textContent = 'Pokaż wszystkie zdjęcia';
-        toggleBtn.classList.remove('expanded');
-        // Scroll do początku sekcji
+      if (!isExpanded) {
         var section = document.getElementById('galeria');
         if (section) smoothScrollTo(section.offsetTop - 90);
       }
@@ -349,41 +435,18 @@
   }
 
   // ── FILTRY ──
-  var filterBtns = document.querySelectorAll('.gf-btn');
   filterBtns.forEach(function(btn) {
     btn.addEventListener('click', function() {
       filterBtns.forEach(function(b) { b.classList.remove('active'); });
       btn.classList.add('active');
 
-      var filter = btn.getAttribute('data-filter');
-      var allItems = grid ? grid.querySelectorAll('.gallery-item') : [];
-      var delay = 0;
+      currentFilter = btn.getAttribute('data-filter') || 'all';
 
-      // Przy zmianie filtra zawsze rozwijamy siatkę
-      grid.classList.remove('collapsed');
-      isExpanded = true;
-      if (toggleBtn) {
-        toggleBtn.querySelector('.gt-label').textContent = 'Pokaż mniej';
-        toggleBtn.classList.add('expanded');
-      }
+      // TYLKO mobile/tablet: każda zmiana kategorii zwija zdjęcia do 4.
+      // Desktop zachowuje dotychczasowe wygodne rozwijanie kategorii.
+      isExpanded = !isMobileTablet();
 
-      allItems.forEach(function(item) {
-        var cat = item.getAttribute('data-cat');
-        if (filter === 'all' || cat === filter) {
-          item.classList.remove('gi-hidden');
-          item.style.opacity = '0';
-          item.style.transform = 'translateY(14px) scale(0.97)';
-          item.style.animationDelay = (delay * 0.05) + 's';
-          item.classList.remove('gi-visible');
-          void item.offsetWidth;
-          item.classList.add('gi-visible');
-          delay++;
-        } else {
-          item.classList.add('gi-hidden');
-        }
-      });
-
-      rebuildVisibleList();
+      applyGalleryState(true);
     });
   });
 
@@ -400,8 +463,7 @@
 
   function rebuildVisibleList() {
     visibleItems = [];
-    if (!grid) return;
-    grid.querySelectorAll('.gallery-item:not(.gi-hidden)').forEach(function(item) {
+    grid.querySelectorAll('.gallery-item:not(.gi-hidden):not(.mobile-limit-hidden)').forEach(function(item) {
       visibleItems.push(item);
     });
   }
@@ -440,21 +502,23 @@
   }
 
   function lbGoPrev() {
+    if (!visibleItems.length) return;
     currentIdx = (currentIdx - 1 + visibleItems.length) % visibleItems.length;
     showLbSlide(currentIdx, true);
   }
 
   function lbGoNext() {
+    if (!visibleItems.length) return;
     currentIdx = (currentIdx + 1) % visibleItems.length;
     showLbSlide(currentIdx, true);
   }
 
-  if (grid) {
-    grid.addEventListener('click', function(e) {
-      var item = e.target.closest('.gallery-item');
-      if (item && !item.classList.contains('gi-hidden')) openLightbox(item);
-    });
-  }
+  grid.addEventListener('click', function(e) {
+    var item = e.target.closest('.gallery-item');
+    if (item && !item.classList.contains('gi-hidden') && !item.classList.contains('mobile-limit-hidden')) {
+      openLightbox(item);
+    }
+  });
 
   if (lbClose)  lbClose.addEventListener('click', closeLightbox);
   if (lbPrev)   lbPrev.addEventListener('click', lbGoPrev);
@@ -489,6 +553,23 @@
     }, { passive: true });
   }
 
-  rebuildVisibleList();
+  var resizeTimer;
+  var lastMobileState = isMobileTablet();
+  window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+      var nowMobile = isMobileTablet();
+      if (nowMobile !== lastMobileState) {
+        // Po wejściu na mobile/tablet resetujemy kategorię do zwiniętego widoku.
+        isExpanded = !nowMobile;
+        lastMobileState = nowMobile;
+      }
+      applyGalleryState(false);
+    }, 120);
+  });
+
+  // Start: mobile/tablet zwinięte do 4, desktop standardowo zwinięty jak wcześniej.
+  isExpanded = false;
+  applyGalleryState(false);
 
 })();

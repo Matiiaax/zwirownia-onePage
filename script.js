@@ -1,0 +1,494 @@
+// Skrypty strony P.U.H. DROGMET - wydzielone z index.html
+
+// ── SMOOTH SCROLL TO TOP ──
+  function smoothScrollTop() {
+    const start = window.scrollY;
+    const duration = Math.min(800 + start * 0.3, 1600);
+    const startTime = performance.now();
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+    }
+    function step(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      window.scrollTo(0, start * (1 - easeInOutCubic(progress)));
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  // NAV scroll
+  const navbar = document.getElementById('navbar');
+  const scrollTopBtn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 60);
+    scrollTopBtn.classList.toggle('show', y > 300);
+  });
+
+  // HAMBURGER
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('open');
+  }
+
+  // INTERSECTION OBSERVER
+  const cards = document.querySelectorAll('.service-card, .machine-card');
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        const idx = [...cards].indexOf(e.target);
+        e.target.style.animationDelay = `${(idx % 6) * 0.08}s`;
+        e.target.classList.add('in-view');
+      }
+    });
+  }, { threshold:0.15 });
+  cards.forEach(c => cardObserver.observe(c));
+
+  // Cities animation
+  const cityItems = document.querySelectorAll('.city-item');
+  const citiesObs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      cityItems.forEach((item, i) => {
+        setTimeout(() => item.classList.add('visible'), i * 250);
+      });
+    }
+  }, { threshold:0.3 });
+  const cl = document.getElementById('citiesList');
+  if (cl) citiesObs.observe(cl);
+
+  // ── COUNTER ANIMATION ──
+  const counter = document.getElementById('counter12');
+  let counterStarted = false;
+  const counterObs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && !counterStarted) {
+      counterStarted = true;
+      let start = 0; const end = 15; const duration = 1800;
+      const step = duration / end;
+      const timer = setInterval(() => {
+        start++;
+        counter.textContent = start;
+        if (start >= end) clearInterval(timer);
+      }, step);
+    }
+  }, { threshold: 0.5 });
+  if (counter) counterObs.observe(counter);
+
+  // ── LEAFLET MAP ──
+  const mapEl = document.getElementById('serviceMap');
+  if (mapEl) {
+    const map = L.map('serviceMap', {
+      center: [53.55, 22.85],
+      zoom: 14,
+      zoomControl: true,
+      scrollWheelZoom: false,
+      attributionControl: false
+    });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      maxZoom: 14,
+      attribution: '&copy; OpenStreetMap &copy; CARTO'
+    }).addTo(map);
+
+
+
+    // ── WOJ. PODLASKIE — obszar cofnięty do środka, bez zahaczania o Litwę i Białoruś ──
+    const podlaskiePoly = [
+  [
+  
+  [53.3993485619479, 23.68781840993384],
+  [53.5859169843809, 23.62684717952402],
+  [53.672902286070396, 23.596714657820158],
+  [53.709860361535014, 23.584391314844957],
+  [53.72808497148836, 23.585537021353215],
+  [53.73696702056178, 23.583712364730616],
+  [53.744078332766286, 23.58210082647713],
+  [53.74543830974591, 23.579460953841362],
+  [53.76012366631808, 23.560018447911435],
+  [53.767578512968505, 23.548668510115895],
+  [53.780332108039886, 23.54660711854948],
+  [53.791755688870055, 23.544483756212237],
+  [53.80133043437391, 23.544601417570828],
+  [53.82243278093665, 23.54553693417124],
+  [53.82763436924026, 23.54616281393541],
+  [53.831756971319514, 23.550007330138488],
+  [53.834782518830195, 23.547231018570592],
+  [53.83621089614077, 23.548047191569218],
+  [53.83826542420034, 23.55100489973705],
+  [53.8409350803841, 23.551355563287444],
+  [53.84319508102538, 23.547962501609792],
+  [53.844531376466435, 23.545525425753432],
+  [53.84689134005092, 23.545310469745687],
+  [53.84883947390507, 23.546498846154964],
+  [53.84914544329679, 23.550463641563645],
+  [53.85109555552687, 23.55130235007466],
+  [53.85253191925132, 23.550158039580168],
+  [53.856121238757275, 23.547960540721046],
+  [53.85695141702358, 23.535127657682565],
+  [53.86259918053541, 23.523452369064593],
+  [53.864721453878666, 23.524860573367448],
+  [53.86448221620434, 23.526431328545918],
+  [53.86670774005661, 23.525908263778646],
+  [53.86848762231796, 23.525567359778872],
+  [53.873349461623164, 23.523686174083835],
+  [53.883584214931766, 23.520632564340293],
+  [53.902828450763536, 23.51312228738294],
+  [53.916523301843974, 23.51113198137064],
+  [53.929859474215576, 23.510707405133044],
+  [53.93633598977689, 23.51314787137813],
+  [53.94301744367532, 23.513500796866104],
+  [53.95617549318527, 23.51455490664079],
+  [53.98839756441118, 23.481457769111714],
+  [54.009435170738314, 23.488029024921396],
+  [54.00587035646113, 23.498300141935307],
+  [54.01123105239464, 23.508571258949218],
+  [54.027631523376385, 23.515284922022428],
+  [54.054685478004686, 23.524963496591575],
+  [54.073639097777416, 23.521902829273547],
+  [54.08569864971473, 23.51950980216921],
+  [54.093359468880706, 23.511101083497685],
+  [54.121666626591455, 23.492352470950962],
+  [54.11766320156414, 23.363104035917303],
+  [54.12260603233038, 23.14128816219869],
+  [54.11687990775468, 22.879947542510337],
+  [54.092093509639696, 22.87072599480897],
+  [54.0679820316185, 22.890952880676696],
+  [54.02107777018873, 22.889496474584696],
+  [53.92660203041048, 22.772164610468096],
+  [53.894489273994054, 22.70181758495073],
+  [53.733255711860465, 22.682149240109055],
+  [53.57288922037495, 22.88941342403899],
+  [53.380157987163415, 23.04144602866529],
+  [53.38857764708639, 23.480409150601957],
+  [53.3993485619479, 23.68781840993384]
+
+]
+];
+
+    const podlaskieArea = L.polygon(podlaskiePoly, {
+      color: '#F5A623',
+      weight: 2,
+      fillColor: '#F5A623',
+      fillOpacity: 0.14,
+      dashArray: '7,5',
+      smoothFactor: 1.5,
+      interactive: false
+    }).addTo(map);
+
+    map.fitBounds(podlaskieArea.getBounds(), {
+      padding: [24, 24]
+    });
+
+    // Custom pulsing icon for main HQ
+    const pulseIcon = L.divIcon({
+      className: '',
+      html: `<div style="position:relative;width:32px;height:32px;">
+        <div style="position:absolute;inset:0;border-radius:50%;background:rgba(245,166,35,0.3);animation:mapPulse 2s ease-out infinite;"></div>
+        <div style="position:absolute;inset:4px;border-radius:50%;background:#F5A623;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.4);"></div>
+      </div>`,
+      iconSize: [32,32], iconAnchor: [16,16]
+    });
+
+    const cityIcon = L.divIcon({
+      className: '',
+      html: '<div style="width:14px;height:14px;border-radius:50%;background:#F5A623;border:2px solid #fff;box-shadow:0 1px 6px rgba(0,0,0,0.4);"></div>',
+      iconSize: [14,14], iconAnchor: [7,7]
+    });
+
+    // Main marker
+    const mainPopup = `<div style="font-family:Oswald,sans-serif;padding:6px 2px;">
+      <div style="font-size:1rem;font-weight:700;color:#F5A623;">🏭 ŻWIROWNIA SKIEBLEWO</div>
+      <div style="font-size:0.78rem;color:#333;margin-top:4px;">P.U.H. DROGMET · Lipsk</div>
+      <div style="font-size:0.75rem;color:#666;margin-top:2px;">ul. Złobikowskiego 3A, 16-315 Lipsk</div>
+      <a href="tel:784103957" style="display:block;margin-top:8px;background:#F5A623;color:#1e1e1e;padding:5px 10px;text-align:center;text-decoration:none;font-weight:700;font-size:0.82rem;border-radius:3px;">📞 784 103 957</a>
+    </div>`;
+
+    L.marker([53.7581, 23.4215], { icon: pulseIcon })
+      .bindPopup(mainPopup, { maxWidth: 220 })
+      .addTo(map)
+      .openPopup();
+
+    // City markers
+    const cities = [
+      { name: 'Augustów', coords: [53.8447, 23.0027], dist: '~50 km' },
+      { name: 'Suwałki', coords: [54.0993, 22.9365], dist: '~75 km' },
+      { name: 'Dąbrowa Białostocka', coords: [53.6623, 23.3470], dist: '~35 km' },
+      { name: 'Sokółka', coords: [53.4027, 23.5033], dist: '~60 km' },
+      { name: 'Suchowola', coords: [53.5883, 23.0611], dist: '~20 km' }
+    ];
+
+    cities.forEach(c => {
+      L.marker(c.coords, { icon: cityIcon })
+        .bindPopup(`<div style="font-family:Oswald,sans-serif;padding:4px 2px;">
+          <div style="font-weight:700;font-size:0.95rem;color:#1e1e1e;">${c.name}</div>
+          <div style="font-size:0.75rem;color:#888;margin-top:3px;">Obszar obsługi · ${c.dist}</div>
+        </div>`, { maxWidth: 180 })
+        .addTo(map);
+
+      // Draw line from HQ to city
+      L.polyline([[53.7581, 23.4215], c.coords], {
+        color: 'rgba(245,166,35,0.45)',
+        weight: 2,
+        dashArray: '8,6'
+      }).addTo(map);
+    });
+
+    // Attribution
+    L.control.attribution({ prefix: false, position: 'bottomright' })
+      .addAttribution('© OpenStreetMap · © CartoDB')
+      .addTo(map);
+  }
+
+  // ── SMOOTH SCROLL (easing) ──
+  function smoothScrollTo(targetY) {
+    const start = window.scrollY;
+    const dist = targetY - start;
+    const duration = Math.min(Math.abs(dist) * 0.6 + 300, 1200);
+    const startTime = performance.now();
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+    }
+    function step(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      window.scrollTo(0, start + dist * easeInOutCubic(progress));
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const href = a.getAttribute('href');
+      if (href === '#') return;
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) smoothScrollTo(target.offsetTop - 82);
+    });
+  });
+
+  // FORM submit animation
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      submitBtn.textContent = 'Wysyłanie...';
+      submitBtn.style.background = '#888';
+      submitBtn.disabled = true;
+      setTimeout(() => {
+        submitBtn.textContent = '✓ Wysłano! Odezwiemy się wkrótce.';
+        submitBtn.style.background = '#27ae60';
+        submitBtn.style.color = '#fff';
+      }, 1500);
+    });
+  }
+
+// ================================================================
+//  GALERIA v2 — zastąp poprzedni blok galerii na końcu script.js
+//  (usuń poprzedni kod zaczynający się od "(function() {" aż do "})();" )
+// ================================================================
+
+(function() {
+  'use strict';
+
+  var grid       = document.getElementById('galleryGrid');
+  var toggleBtn  = document.getElementById('galleryToggleBtn');
+  var isExpanded = false;
+
+  // Start zwinięty
+  if (grid) grid.classList.add('collapsed');
+
+  // ── INTERSECTION OBSERVER dla kafli ──
+  var galleryItems = document.querySelectorAll('.gallery-item');
+  if (galleryItems.length) {
+    var giObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var el  = entry.target;
+          var idx = parseInt(el.getAttribute('data-index') || '0');
+          el.style.animationDelay = (idx % 10 * 0.05) + 's';
+          el.classList.add('gi-visible');
+          giObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.08 });
+    galleryItems.forEach(function(item) { giObserver.observe(item); });
+  }
+
+  // ── PRZYCISK POKAŻ WIĘCEJ / MNIEJ ──
+  if (toggleBtn && grid) {
+    toggleBtn.addEventListener('click', function() {
+      isExpanded = !isExpanded;
+
+      if (isExpanded) {
+        grid.classList.remove('collapsed');
+        toggleBtn.querySelector('.gt-label').textContent = 'Pokaż mniej';
+        toggleBtn.classList.add('expanded');
+
+        // Animuj nowo pokazane kafle
+        var hidden = grid.querySelectorAll('.gallery-item:not(.gi-visible):not(.gi-hidden)');
+        hidden.forEach(function(item, i) {
+          item.style.animationDelay = (i * 0.05) + 's';
+          item.classList.add('gi-visible');
+        });
+      } else {
+        grid.classList.add('collapsed');
+        toggleBtn.querySelector('.gt-label').textContent = 'Pokaż wszystkie zdjęcia';
+        toggleBtn.classList.remove('expanded');
+        // Scroll do początku sekcji
+        var section = document.getElementById('galeria');
+        if (section) smoothScrollTo(section.offsetTop - 90);
+      }
+    });
+  }
+
+  // ── FILTRY ──
+  var filterBtns = document.querySelectorAll('.gf-btn');
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+
+      var filter = btn.getAttribute('data-filter');
+      var allItems = grid ? grid.querySelectorAll('.gallery-item') : [];
+      var delay = 0;
+
+      // Przy zmianie filtra zawsze rozwijamy siatkę
+      grid.classList.remove('collapsed');
+      isExpanded = true;
+      if (toggleBtn) {
+        toggleBtn.querySelector('.gt-label').textContent = 'Pokaż mniej';
+        toggleBtn.classList.add('expanded');
+      }
+
+      allItems.forEach(function(item) {
+        var cat = item.getAttribute('data-cat');
+        if (filter === 'all' || cat === filter) {
+          item.classList.remove('gi-hidden');
+          item.style.opacity = '0';
+          item.style.transform = 'translateY(14px) scale(0.97)';
+          item.style.animationDelay = (delay * 0.05) + 's';
+          item.classList.remove('gi-visible');
+          void item.offsetWidth;
+          item.classList.add('gi-visible');
+          delay++;
+        } else {
+          item.classList.add('gi-hidden');
+        }
+      });
+
+      rebuildVisibleList();
+    });
+  });
+
+  // ── LIGHTBOX ──
+  var lbOverlay = document.getElementById('lbOverlay');
+  var lbImg     = document.getElementById('lbImg');
+  var lbCaption = document.getElementById('lbCaption');
+  var lbCounter = document.getElementById('lbCounter');
+  var lbClose   = document.getElementById('lbClose');
+  var lbPrev    = document.getElementById('lbPrev');
+  var lbNext    = document.getElementById('lbNext');
+  var visibleItems = [];
+  var currentIdx   = 0;
+
+  function rebuildVisibleList() {
+    visibleItems = [];
+    if (!grid) return;
+    grid.querySelectorAll('.gallery-item:not(.gi-hidden)').forEach(function(item) {
+      visibleItems.push(item);
+    });
+  }
+
+  function openLightbox(item) {
+    rebuildVisibleList();
+    var pos = visibleItems.indexOf(item);
+    currentIdx = pos >= 0 ? pos : 0;
+    showLbSlide(currentIdx, false);
+    lbOverlay.classList.add('lb-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lbOverlay.classList.remove('lb-open');
+    document.body.style.overflow = '';
+  }
+
+  function showLbSlide(idx, animate) {
+    var item = visibleItems[idx];
+    if (!item) return;
+    var imgEl = item.querySelector('img');
+    var txtEl = item.querySelector('.gallery-ov-txt');
+    if (animate !== false) {
+      lbImg.style.opacity = '0';
+      lbImg.style.transform = 'scale(0.92)';
+    }
+    lbImg.src = imgEl ? imgEl.src : '';
+    lbImg.alt = imgEl ? (imgEl.alt || '') : '';
+    lbCaption.textContent = txtEl ? txtEl.textContent : '';
+    lbCounter.textContent = (idx + 1) + ' / ' + visibleItems.length;
+    setTimeout(function() {
+      lbImg.style.opacity = '';
+      lbImg.style.transform = '';
+    }, 20);
+  }
+
+  function lbGoPrev() {
+    currentIdx = (currentIdx - 1 + visibleItems.length) % visibleItems.length;
+    showLbSlide(currentIdx, true);
+  }
+
+  function lbGoNext() {
+    currentIdx = (currentIdx + 1) % visibleItems.length;
+    showLbSlide(currentIdx, true);
+  }
+
+  if (grid) {
+    grid.addEventListener('click', function(e) {
+      var item = e.target.closest('.gallery-item');
+      if (item && !item.classList.contains('gi-hidden')) openLightbox(item);
+    });
+  }
+
+  if (lbClose)  lbClose.addEventListener('click', closeLightbox);
+  if (lbPrev)   lbPrev.addEventListener('click', lbGoPrev);
+  if (lbNext)   lbNext.addEventListener('click', lbGoNext);
+
+  if (lbOverlay) {
+    lbOverlay.addEventListener('click', function(e) {
+      if (e.target === lbOverlay) closeLightbox();
+    });
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (!lbOverlay || !lbOverlay.classList.contains('lb-open')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  lbGoPrev();
+    if (e.key === 'ArrowRight') lbGoNext();
+  });
+
+  var touchStartX = 0, touchStartY = 0;
+  if (lbOverlay) {
+    lbOverlay.addEventListener('touchstart', function(e) {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    lbOverlay.addEventListener('touchend', function(e) {
+      if (!lbOverlay.classList.contains('lb-open')) return;
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 48) {
+        if (dx > 0) lbGoPrev(); else lbGoNext();
+      }
+    }, { passive: true });
+  }
+
+  rebuildVisibleList();
+
+})();

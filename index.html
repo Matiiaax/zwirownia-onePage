@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P.U.H. DROGMET – Żwirownia Skieblewo | Lipsk</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo"><img src="logo2.png" alt="P.U.H. DROGMET Logo"></a>
+  <ul class="nav-links">
+    <li><a href="#uslugi">Usługi</a></li>
+    <li><a href="#obszar">Obszar</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+    <li><a href="#cennik">Cennik</a></li>
+    <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#uslugi" onclick="closeMobile()">Usługi</a>
+  <a href="#obszar" onclick="closeMobile()">Obszar działania</a>
+  <a href="#maszyny" onclick="closeMobile()">Maszyny i pojazdy</a>
+  <a href="#cennik" onclick="closeMobile()">Cennik</a>
+  <a href="#kontakt" onclick="closeMobile()">Kontakt</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-pattern"></div>
+  <div class="hero-corner"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        <span class="line-small">Żwirownia Skieblewo · Lipsk</span>
+        <span>Kruszywo</span>
+        <span class="accent">prosto ze żwirowni</span>
+        <span class="line2">Transport · Roboty Ziemne</span>
+      </h1>
+      <p class="hero-sub">
+        Działamy na terenie <strong>województwa podlaskiego</strong>. Specjalizujemy się w wydobywaniu i przerabianiu kopalin — oferujemy <strong>kruszywa sortowane i płukane</strong> wysokiej jakości, prosto z własnej żwirowni.<br>
+        W ofercie również transport oraz budowa dróg, placów i utwardzeń.
+      </p>
+      <div class="hero-years">
+        <span class="num" id="counter12">0</span>
+        <span class="txt">lat<br>doświadczenia</span>
+      </div>
+      <div class="hero-btns">
+        <a href="#kontakt" class="btn btn-primary">Zapytaj o wycenę</a>
+        <a href="tel:784103957" class="btn btn-outline"> 784 103 957</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div>
+
+        <div class="hero-stats">
+          <div class="stat-pill"><div class="sv">100%</div><div class="sl">Naturalne kruszywo</div></div>
+          <div class="stat-pill"><div class="sv">VAT</div><div class="sl">Faktury dla firm i gmin</div></div>
+          <div class="stat-pill"><div class="sv">Podlasie</div><div class="sl">Region obsługi</div></div>
+          <div class="stat-pill"><div class="sv">Skieblewo</div><div class="sl">Własna żwirownia</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="uslugi" class="section">
+  <div class="container">
+    <div class="section-eyebrow">Co robimy</div>
+    <h2 class="section-title">Zakres <span class="acc">usług</span></h2>
+    <p class="section-sub">Od wydobycia kruszywa przez transport aż po pełen zakres robót ziemnych i budowlanych.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="svc-num">01</div>
+        <div class="svc-icon">🚛</div>
+        <h3 class="svc-title">Transport</h3>
+        <p class="svc-desc">Dostawa kruszywa, urobku i materiałów budowlanych. Własna flota pojazdów ciężarowych na terenie Podlasia i okolic.</p>
+      </div>
+      <div class="service-card">
+        <div class="svc-num">02</div>
+        <div class="svc-icon">🛣️</div>
+        <h3 class="svc-title">Budowa dróg</h3>
+        <p class="svc-desc">Drogi dojazdowe, place manewrowe, utwardzenia terenu, podjazdy. Realizacje dla gmin, przedsiębiorstw i klientów indywidualnych.</p>
+      </div>
+      <div class="service-card">
+        <div class="svc-num">03</div>
+        <div class="svc-icon">💧</div>
+        <h3 class="svc-title">Prace melioracyjne</h3>
+        <p class="svc-desc">Kopanie i czyszczenie rowów melioracyjnych oraz rzek. Przywracanie drożności systemów odwodnień. Obsługa gmin i RZGW.</p>
+      </div>
+      <div class="service-card">
+        <div class="svc-num">04</div>
+        <div class="svc-icon">🏗️</div>
+        <h3 class="svc-title">Wykonywanie wykopów</h3>
+        <p class="svc-desc">Wykopy pod fundamenty, sieci kanalizacyjne, wodociągowe, zbiorniki. Precyzja i terminowość na każdym etapie inwestycji.</p>
+      </div>
+      <div class="service-card">
+        <div class="svc-num">05</div>
+        <div class="svc-icon">⛏️</div>
+        <h3 class="svc-title">Kruszywo naturalne płukane</h3>
+        <p class="svc-desc">Żwir, piasek, pospółka — płukane i sortowane wprost z naszej żwirowni Skieblewo. Różne frakcje dostępne od ręki, z odbiorem lub dostawą.</p>
+      </div>
+      <div class="service-card">
+        <div class="svc-num">06</div>
+        <div class="svc-icon">🪨</div>
+        <h3 class="svc-title">Kruszywo łamane</h3>
+        <p class="svc-desc">Kruszywo łamane do podbudów drogowych, placów i fundamentów. Idealne dla wykonawców dróg i firm budowlanych.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OBSZAR -->
+<section id="obszar" class="section" style="background:var(--dark);padding:80px 40px;">
+  <div class="container">
+    <div class="section-eyebrow" style="color:var(--yellow-light)">Gdzie działamy</div>
+    <h2 class="section-title" style="color:#fff">Obszar <span class="acc">działania</span></h2>
+    <p class="section-sub" style="color:rgba(255,255,255,0.55)">Działamy na terenie województwa podlaskiego. Poniżej mapa z zaznaczonym obszarem oraz głównymi obsługiwanymi miastami.</p>
+    <div class="map-wrap">
+      <div class="map-svg-container" style="position:relative;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.4);min-height:420px;">
+        <div id="serviceMap" style="width:100%;height:460px;"></div>
+      </div>
+
+      <div>
+        <div class="cities-list" id="citiesList">
+         <div class="cities-list" id="citiesList">
+          <div class="city-item">
+            <div class="city-dot main"></div>
+            <div class="city-name">🏭 Baza — Żwirownia Skieblewo</div>
+            <span class="city-dist">Lipsk</span>
+          </div>
+
+          <div class="city-item">
+            <div class="city-dot"></div>
+            <div class="city-name">Augustów</div>
+            <span class="city-dist">~35 km</span>
+          </div>
+
+          <div class="city-item">
+            <div class="city-dot"></div>
+            <div class="city-name">Suwałki</div>
+            <span class="city-dist">~65 km</span>
+          </div>
+
+          <div class="city-item">
+            <div class="city-dot"></div>
+            <div class="city-name">Dąbrowa Białostocka</div>
+            <span class="city-dist">~35 km</span>
+          </div>
+
+          <div class="city-item">
+            <div class="city-dot"></div>
+            <div class="city-name">Sokółka</div>
+            <span class="city-dist">~40 km</span>
+          </div>
+
+          <div class="city-item">
+            <div class="city-dot"></div>
+            <div class="city-name">Suchowola</div>
+            <span class="city-dist">~30 km</span>
+          </div>
+        </div>
+        </div>
+        <p style="color:rgba(255,255,255,0.35);font-size:0.78rem;margin-top:20px;line-height:1.7;">
+          * Obsługujemy również zlecenia poza wskazanym obszarem. Skontaktuj się z nami w celu ustalenia warunków.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+  ZASTĄP sekcję "MASZYNY" — oraz zmień w navbarze:
+    href="#maszyny" → href="#galeria"
+    tekst "Maszyny i pojazdy" → "Galeria"
+================================================================ -->
+
+<!-- GALERIA -->
+<section id="galeria" class="section section-gray">
+  <div class="container">
+    <div class="section-eyebrow">Realizacje i sprzęt</div>
+    <h2 class="section-title">Galeria <span class="acc">zdjęć</span></h2>
+    <p class="section-sub">Nasza żwirownia, sprzęt i realizowane projekty — zdjęcia prosto z terenu pracy.</p>
+
+    <div class="gallery-filters" id="galleryFilters">
+      <button class="gf-btn active" data-filter="all">Wszystkie</button>
+      <button class="gf-btn" data-filter="sprzet">Sprzęt</button>
+      <button class="gf-btn" data-filter="kruszywo">Kruszywo</button>
+      <button class="gf-btn" data-filter="drogi">Roboty i drogi</button>
+    </div>
+
+    <div class="gallery-wrap">
+      <div class="gallery-grid collapsed" id="galleryGrid">
+      <div class="gallery-item" data-cat="sprzet" data-index="0">
+        <img src="img/zdjecie3.png" alt="Żwirownia Skieblewo" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="sprzet" data-index="1">
+        <img src="img/gallery/zdjecie2.jfif" alt="Sprzęt – koparka" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="2">
+        <img src="img/gallery/zdjecie4.jfif" alt="Droga dojazdowa" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="kruszywo" data-index="3">
+        <img src="img/gallery/zdjecie5.jfif" alt="kruszywo" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="4">
+        <img src="img/gallery/zdjecie6.jfif" alt="Kruszywo płukane" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="sprzet" data-index="5">
+        <img src="img/gallery/zdjecie7.jfif" alt="Wywrotka 3-osiowa" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="6">
+        <img src="img/gallery/zdjecie8.jfif" alt="Utwardzenie placu" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="7">
+        <img src="img/gallery/zdjecie10.jfif" alt="Sortownia kruszywa" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="sprzet" data-index="8">
+        <img src="img/gallery/zdjecie11.jfif" alt="Spycharka gąsienicowa" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="sprzet" data-index="9">
+        <img src="img/gallery/zdjecie12.jfif" alt="Droga gminna" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="kruszywo" data-index="10">
+        <img src="img/gallery/zdjecie13.jfif" alt="Rów melioracyjny" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="sprzet" data-index="11">
+        <img src="img/gallery/zdjecie14.jfif" alt="Załadunek kruszywa" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="kruszywo" data-index="12">
+        <img src="img/gallery/zdjecie15.jfif" alt="Koparka kołowa" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="sprzet" data-index="13">
+        <img src="img/gallery/zdjecie16.jfif" alt="Plac manewrowy" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="14">
+        <img src="img/gallery/zdjecie17.jfif" alt="Piasek frakcjonowany" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="15">
+        <img src="img/gallery/zdjecie18.jfif" alt="Niwelacja terenu" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="16">
+        <img src="img/gallery/zdjecie19.jfif" alt="Ładowarka teleskopowa" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="17">
+        <img src="img/gallery/zdjecie20.jfif" alt="Podjazd" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="18">
+        <img src="img/gallery/zdjecie21.jfif" alt="Żwirownia z lotu ptaka" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="sprzet" data-index="19">
+        <img src="img/gallery/zdjecie22.jfif" alt="Transport kruszywa" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="20">
+        <img src="img/gallery/zdjecie23.jfif" alt="Sprzęt na budowie" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="21">
+        <img src="img/gallery/zdjecie24.jfif" alt="Droga polna" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="22">
+        <img src="img/gallery/zdjecie25.jfif" alt="Melioracja – rzeka" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="sprzet" data-index="23">
+        <img src="img/gallery/zdjecie27.jfif" alt="Piasek płukany" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="24">
+        <img src="img/gallery/zdjecie28.jfif" alt="Wywrotka w terenie" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="drogi" data-index="25">
+        <img src="img/gallery/zdjecie29.jfif" alt="Roboty drogowe" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      <div class="gallery-item" data-cat="sprzet" data-index="26">
+        <img src="img/gallery/zdjecie30.jfif" alt="Realizacja dla gminy" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+
+      </div><!-- /gallery-grid -->
+    </div><!-- /gallery-wrap -->
+
+    <div class="gallery-toggle-wrap">
+      <button class="gallery-toggle-btn" id="galleryToggleBtn">
+        <span class="gt-label">Pokaż wszystkie zdjęcia</span>
+        <span class="gt-arrow">↓</span>
+      </button>
+    </div>
+
+    <p style="font-size:0.82rem;color:var(--gray);margin-top:22px;text-align:center;">
+      Masz pytania o nasze realizacje? <a href="#kontakt" style="color:var(--yellow-dark);font-weight:700;text-decoration:none;">Skontaktuj się z nami →</a>
+    </p>
+  </div>
+</section>
+
+
+<!-- LIGHTBOX — wklej raz tuż przed </body> -->
+<div class="lb-overlay" id="lbOverlay" role="dialog" aria-modal="true" aria-label="Podgląd zdjęcia">
+  <button class="lb-close" id="lbClose" aria-label="Zamknij">✕</button>
+  <button class="lb-arrow lb-prev" id="lbPrev" aria-label="Poprzednie">&#8249;</button>
+  <button class="lb-arrow lb-next" id="lbNext" aria-label="Następne">&#8250;</button>
+  <div class="lb-img-wrap">
+    <img src="" alt="" id="lbImg" class="lb-img">
+    <div class="lb-caption" id="lbCaption" style="display:none;"></div>
+    <div class="lb-counter" id="lbCounter"></div>
+  </div>
+</div>
+
+<!-- CENNIK -->
+<section id="cennik" class="section">
+  <div class="container">
+    <div class="section-eyebrow">Wycena</div>
+    <h2 class="section-title">Ceny <span class="acc">indywidualne</span></h2>
+    <div class="pricing-box">
+      <div class="pricing-txt">
+        <h3>Każde zlecenie wyceniamy indywidualnie</h3>
+        <p>Cena zależy od rodzaju usługi, ilości materiału, odległości dostawy i specyfiki terenu. Skontaktuj się z nami — wycenimy szybko i bez zobowiązań. Obsługujemy zarówno małe zlecenia prywatne, jak i duże kontrakty dla gmin.</p>
+      </div>
+      <div class="pricing-cta">
+        <a href="tel:784103957" class="btn btn-dark">📞 Zadzwoń po wycenę</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt" class="section section-gray">
+  <div class="container">
+    <div class="section-eyebrow">Skontaktuj się</div>
+    <h2 class="section-title">Wyślij <span class="acc">zapytanie</span></h2>
+    <div class="contact-grid">
+      <div>
+        <div class="contact-info">
+          <a href="tel:784103957" class="contact-card">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-label">Telefon</div>
+              <div class="contact-value">784 103 957</div>
+              <div class="contact-sub">Tomasz Wnukowski · pon.–sob. 7:00–18:00</div>
+            </div>
+          </a>
+          <a href="mailto:tomekwnukowski@wp.pl" class="contact-card">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <div class="contact-label">E-mail</div>
+              <div class="contact-value">tomekwnukowski@wp.pl</div>
+              <div class="contact-sub">Odpowiedź w ciągu 24 godzin roboczych</div>
+            </div>
+          </a>
+          <div class="contact-card" style="cursor:default">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-label">Adres firmy</div>
+              <div class="contact-value">ul. Złobikowskiego 3A, 16-315 Lipsk</div>
+              <div class="contact-sub">Żwirownia: Skieblewo k. Lipska · NIP: 846-162-06-50</div>
+            </div>
+          </div>
+        </div>
+        <div class="map-embed">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9707.294!2d23.42!3d53.75!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471c5b3dabb9ed6f%3A0x6d4c99c2e4a38b23!2sLipsk%2C%20Poland!5e0!3m2!1spl!2spl!4v1699000000000!5m2!1spl!2spl"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+      <a
+        href="https://www.google.com/maps/dir/?api=1&destination=53.7581,23.4215&travelmode=driving"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="route-btn"
+      >
+        📍 Wyznacz trasę do żwirowni
+      </a>
+      </div>
+
+      <div class="contact-form">
+        <div class="form-title">Napisz do nas</div>
+        <div class="form-sub">Opisz czego potrzebujesz — odezwiemy się szybko z wyceną.</div>
+        <form action="https://formsubmit.co/tomekwnukowski@wp.pl" method="POST" id="contactForm">
+          <input type="hidden" name="_subject" value="Nowe zapytanie ze strony DROGMET">
+          <input type="hidden" name="_next" value="https://drogmet.pl/dziekujemy">
+          <input type="hidden" name="_captcha" value="false">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Imię i nazwisko *</label>
+              <input type="text" name="imie" placeholder="Jan Kowalski" required>
+            </div>
+            <div class="form-group">
+              <label>Telefon *</label>
+              <input type="tel" name="telefon" placeholder="600 000 000" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>E-mail</label>
+            <input type="email" name="email" placeholder="jan@kowalski.pl">
+          </div>
+          <div class="form-group">
+            <label>Rodzaj zapytania *</label>
+            <select name="usluga" required>
+              <option value="">— Wybierz usługę —</option>
+              <option>Kruszywo naturalne — dostawa</option>
+              <option>Transport materiałów</option>
+              <option>Budowa drogi / utwardzenie terenu</option>
+              <option>Prace melioracyjne</option>
+              <option>Wykopy</option>
+              <option>Realizacja dla gminy / przetarg</option>
+              <option>Inne</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Wiadomość *</label>
+            <textarea name="wiadomosc" placeholder="Opisz zlecenie: ilość materiału, adres dostawy / realizacji, termin..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit" id="submitBtn">Wyślij zapytanie →</button>
+          <p class="form-note">* Pola wymagane. Dane nie są udostępniane osobom trzecim.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="logo2.png" alt="P.U.H. DROGMET Logo">
+      <p>P.U.H. DROGMET — Tomasz Wnukowski<br>
+      Żwirownia Skieblewo · ul. Złobikowskiego 3A, 16-315 Lipsk<br>
+      NIP: 846-162-06-50 · Działamy od 2011 roku.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Usługi</h4>
+      <ul>
+        <li>Transport kruszywa</li>
+        <li>Budowa dróg</li>
+        <li>Prace melioracyjne</li>
+        <li>Wykonywanie wykopów</li>
+        <li>Kruszywo płukane i łamane</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Kontakt</h4>
+      <ul>
+        <li>📞 784 103 957</li>
+        <li>✉️ tomekwnukowski@wp.pl</li>
+        <li>📍 Lipsk, Podlaskie</li>
+        <li>Pn–Sb: 7:00–18:00</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 P.U.H. DROGMET Tomasz Wnukowski · Wszelkie prawa zastrzeżone</span>
+    <span>NIP: 846-162-06-50</span>
+  </div>
+</footer>
+
+<button id="scrollTop" onclick="smoothScrollTop()">↑</button>
+
+<script src="script.js"></script>
+</body>
+</html>

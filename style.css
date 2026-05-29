@@ -1743,3 +1743,468 @@ nav.scrolled + .mobile-menu {
   .lb-caption { font-size: 0.8rem; margin-top: 10px; }
   .lb-counter { font-size: 0.68rem; }
 }
+
+/* ================================================================
+   POPRAWKI 2026-05-29 — MOBILE/TABLET
+   - brak szpary między navbarem i hamburger menu
+   - mniejsze elementy na telefonach/tabletach
+   - bez przycisków hero na pierwszej stronie mobile/tablet
+   - lista miast w obszarze nie jest klikalna
+   - mniejszy przycisk wyznaczania trasy na mobile/tablet
+================================================================ */
+
+/* menu ma zaczynać się dokładnie pod aktualną wysokością navbara */
+.mobile-menu {
+  transition:
+    top 0.30s ease,
+    max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.30s ease,
+    transform 0.30s ease,
+    border-color 0.32s ease,
+    box-shadow 0.32s ease !important;
+}
+
+@media (max-width: 960px) {
+  /* hamburger menu bez przerwy pod navbarem */
+  .mobile-menu { top: 68px !important; }
+  nav.scrolled + .mobile-menu { top: 58px !important; }
+
+  /* pierwsza sekcja: usunięte CTA i telefon na mobile/tablet */
+  .hero-btns { display: none !important; }
+
+  /* ogólne zmniejszenie elementów na tabletach i telefonach */
+  #hero { padding-top: 86px !important; padding-bottom: 34px !important; }
+  .hero-title { font-size: clamp(1.75rem, 6.4vw, 2.65rem) !important; line-height: 1.02 !important; }
+  .hero-title .line-small { font-size: clamp(0.74rem, 2.7vw, 0.95rem) !important; margin-bottom: 6px !important; }
+  .hero-title .line2 { margin-top: 10px !important; }
+  .hero-sub { font-size: 0.82rem !important; line-height: 1.56 !important; margin-bottom: 12px !important; max-width: 620px; }
+  .hero-years { padding: 7px 12px !important; gap: 9px !important; margin-bottom: 0 !important; }
+  .hero-years .num { font-size: 1.65rem !important; }
+  .hero-years .txt { font-size: 0.62rem !important; }
+  .hero-stats { gap: 8px !important; }
+  .stat-pill { padding: 10px 12px !important; border-radius: 9px !important; }
+  .stat-pill .sv { font-size: 1rem !important; }
+  .stat-pill .sl { font-size: 0.58rem !important; }
+
+  .section { padding-top: 38px !important; padding-bottom: 38px !important; }
+  #obszar { padding-top: 38px !important; padding-bottom: 38px !important; }
+  .services-grid { gap: 12px !important; margin-top: 24px !important; }
+  .service-card { padding: 18px 16px !important; }
+  .svc-icon { width: 44px !important; height: 44px !important; font-size: 1.1rem !important; margin-bottom: 12px !important; }
+  .svc-num { font-size: 2.25rem !important; }
+  .svc-title { font-size: 0.92rem !important; }
+  .svc-desc { font-size: 0.78rem !important; line-height: 1.55 !important; }
+
+  /* lista miast ma być tylko informacją, bez klikalności/tap efektu */
+  .cities-list,
+  .city-item,
+  .city-name,
+  .city-dist {
+    pointer-events: none !important;
+    cursor: default !important;
+    user-select: none;
+  }
+  .city-item:hover {
+    background: rgba(255,255,255,0.05) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    transform: translateX(0) !important;
+  }
+
+  /* mniejszy przycisk trasy na mobile/tablet */
+  .route-btn {
+    width: fit-content !important;
+    max-width: 100% !important;
+    min-height: 40px !important;
+    margin: 10px auto 0 !important;
+    padding: 8px 14px !important;
+    border-radius: 8px !important;
+    gap: 6px !important;
+    font-size: 0.72rem !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0.75px !important;
+    box-shadow: 0 7px 16px rgba(245,166,35,0.23), inset 0 1px 0 rgba(255,255,255,0.32) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-menu { top: 62px !important; }
+  nav.scrolled + .mobile-menu { top: 54px !important; }
+
+  #hero { padding-top: 78px !important; padding-bottom: 30px !important; }
+  .hero-title { font-size: clamp(1.55rem, 7.5vw, 2.25rem) !important; }
+  .hero-title .line-small { font-size: clamp(0.72rem, 3.5vw, 0.88rem) !important; }
+  .hero-sub { font-size: 0.78rem !important; }
+  .hero-years .num { font-size: 1.45rem !important; }
+  .hero-years .txt { font-size: 0.58rem !important; }
+  .stat-pill { padding: 9px 10px !important; }
+  .stat-pill .sv { font-size: 0.92rem !important; }
+  .stat-pill .sl { font-size: 0.54rem !important; }
+
+  #serviceMap { height: 240px !important; }
+  .city-item { padding: 10px 12px !important; }
+  .city-name { font-size: 0.8rem !important; }
+  .city-dist { font-size: 0.72rem !important; }
+}
+
+@media (max-width: 600px) {
+  .mobile-menu { top: 58px !important; }
+  nav.scrolled + .mobile-menu { top: 52px !important; }
+
+  #hero { padding-top: 72px !important; padding-bottom: 28px !important; }
+  .hero-title { font-size: clamp(1.42rem, 8.5vw, 2.05rem) !important; }
+  .hero-sub { font-size: 0.76rem !important; }
+  .hero-stats { grid-template-columns: 1fr 1fr !important; }
+  .stat-pill { padding: 8px 9px !important; }
+
+  .route-btn {
+    min-height: 36px !important;
+    padding: 7px 11px !important;
+    font-size: 0.66rem !important;
+    letter-spacing: 0.55px !important;
+    border-radius: 7px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .mobile-menu { top: 56px !important; }
+  nav.scrolled + .mobile-menu { top: 52px !important; }
+
+  .hero-stats { grid-template-columns: 1fr !important; }
+  .route-btn { font-size: 0.63rem !important; padding: 7px 10px !important; }
+}
+
+@media (max-width: 360px) {
+  .mobile-menu { top: 54px !important; }
+  nav.scrolled + .mobile-menu { top: 52px !important; }
+}
+
+/* ================================================================
+   POPRAWKI 2026-05-29 v2
+   - karty statystyk w hero nie rozciągają się na pełną szerokość
+   - większy przycisk trasy na mobile/tablet
+   - trochę mniejsza karta indywidualnej wyceny
+================================================================ */
+
+/* HERO: statystyki jako zwarte kafelki, nie pełna szerokość */
+@media (max-width: 960px) {
+  .hero-visual {
+    justify-content: flex-start !important;
+  }
+
+  .hero-visual > div {
+    width: auto !important;
+    max-width: 390px !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+
+  .hero-stats {
+    display: inline-grid !important;
+    grid-template-columns: repeat(2, minmax(132px, 176px)) !important;
+    width: auto !important;
+    max-width: 100% !important;
+    justify-content: flex-start !important;
+  }
+
+  .stat-pill {
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  /* Przycisk trasy: większy niż w poprzedniej wersji, ale nadal mobilny */
+  .route-btn {
+    min-height: 46px !important;
+    padding: 11px 18px !important;
+    font-size: 0.82rem !important;
+    letter-spacing: 0.8px !important;
+    border-radius: 9px !important;
+    gap: 8px !important;
+    box-shadow:
+      0 10px 24px rgba(245,166,35,0.28),
+      inset 0 1px 0 rgba(255,255,255,0.35) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-visual > div {
+    max-width: 330px !important;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(2, minmax(122px, 154px)) !important;
+    gap: 8px !important;
+  }
+
+  .route-btn {
+    min-height: 44px !important;
+    padding: 10px 16px !important;
+    font-size: 0.78rem !important;
+    letter-spacing: 0.65px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-stats {
+    grid-template-columns: repeat(2, minmax(112px, 145px)) !important;
+  }
+
+  .route-btn {
+    font-size: 0.74rem !important;
+    padding: 10px 14px !important;
+  }
+}
+
+@media (max-width: 340px) {
+  .hero-stats {
+    grid-template-columns: 1fr !important;
+    width: min(220px, 100%) !important;
+  }
+}
+
+/* CENNIK: karta z indywidualną wyceną trochę mniejsza */
+.pricing-box {
+  padding: 34px 38px !important;
+  margin-top: 28px !important;
+  border-radius: 13px !important;
+  gap: 24px !important;
+}
+
+.pricing-txt h3 {
+  font-size: 1.45rem !important;
+  margin-bottom: 8px !important;
+}
+
+.pricing-txt p {
+  font-size: 0.88rem !important;
+  line-height: 1.55 !important;
+  max-width: 450px !important;
+}
+
+.pricing-box .btn-dark {
+  min-height: 46px !important;
+  padding: 12px 24px !important;
+  font-size: 0.8rem !important;
+  border-radius: 7px !important;
+}
+
+@media (max-width: 960px) {
+  .pricing-box {
+    padding: 24px 22px !important;
+    gap: 18px !important;
+  }
+
+  .pricing-txt h3 {
+    font-size: 1.25rem !important;
+  }
+
+  .pricing-txt p {
+    font-size: 0.82rem !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .pricing-box {
+    padding: 20px 15px !important;
+    border-radius: 11px !important;
+    gap: 16px !important;
+  }
+
+  .pricing-box .btn-dark {
+    min-height: 42px !important;
+    padding: 10px 18px !important;
+    font-size: 0.76rem !important;
+  }
+}
+
+/* ================================================================
+   POPRAWKI 2026-05-29 v3
+   - karty statystyk w hero jedna pod druga
+   - wiekszy odstep i ladniejszy wyglad napisu Zwirownia Skieblewo Lipsk
+================================================================ */
+
+/* HERO: wiecej oddechu pod navbarem */
+#hero {
+  padding-top: 142px !important;
+}
+
+.hero-inner {
+  align-items: center !important;
+}
+
+.hero-title {
+  gap: 8px !important;
+}
+
+/* Napis nad tytulem jako subtelna etykieta zamiast przyklejonego tekstu */
+.hero-title .line-small {
+  display: inline-flex !important;
+  align-self: flex-start !important;
+  width: auto !important;
+  max-width: 100% !important;
+  padding: 7px 12px !important;
+  margin-bottom: 14px !important;
+  border: 1px solid rgba(245,166,35,0.42) !important;
+  border-radius: 999px !important;
+  background: rgba(0,0,0,0.22) !important;
+  color: rgba(255,255,255,0.94) !important;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.18) !important;
+  line-height: 1.1 !important;
+}
+
+/* Karty: zawsze jedna pod druga, zwarte i estetyczne */
+.hero-visual {
+  justify-content: center !important;
+}
+
+.hero-visual > div {
+  width: min(300px, 100%) !important;
+  max-width: 300px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.hero-stats {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  width: 100% !important;
+  max-width: 300px !important;
+  gap: 10px !important;
+}
+
+.stat-pill {
+  width: 100% !important;
+  padding: 13px 15px !important;
+}
+
+.stat-pill .sv {
+  font-size: 1.18rem !important;
+}
+
+.stat-pill .sl {
+  font-size: 0.62rem !important;
+  line-height: 1.25 !important;
+}
+
+@media (max-width: 960px) {
+  #hero {
+    padding-top: 108px !important;
+    padding-bottom: 38px !important;
+  }
+
+  .hero-inner {
+    gap: 24px !important;
+  }
+
+  .hero-title {
+    gap: 6px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .hero-title .line-small {
+    margin-bottom: 12px !important;
+    padding: 7px 11px !important;
+  }
+
+  .hero-visual {
+    justify-content: flex-start !important;
+  }
+
+  .hero-visual > div,
+  .hero-stats {
+    width: min(280px, 100%) !important;
+    max-width: 280px !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+
+  .stat-pill {
+    padding: 11px 13px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  #hero {
+    padding-top: 100px !important;
+    padding-bottom: 36px !important;
+  }
+
+  .hero-title .line-small {
+    margin-bottom: 11px !important;
+  }
+
+  .hero-sub {
+    margin-top: 2px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #hero {
+    padding-top: 92px !important;
+    padding-bottom: 34px !important;
+  }
+
+  .hero-inner {
+    gap: 20px !important;
+  }
+
+  .hero-title {
+    margin-bottom: 12px !important;
+  }
+
+  .hero-title .line-small {
+    padding: 6px 10px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .hero-visual > div,
+  .hero-stats {
+    width: min(255px, 100%) !important;
+    max-width: 255px !important;
+  }
+
+  .stat-pill {
+    padding: 10px 12px !important;
+  }
+
+  .stat-pill .sv {
+    font-size: 1.02rem !important;
+  }
+
+  .stat-pill .sl {
+    font-size: 0.57rem !important;
+  }
+}
+
+@media (max-width: 420px) {
+  #hero {
+    padding-top: 88px !important;
+  }
+
+  .hero-visual > div,
+  .hero-stats {
+    width: min(240px, 100%) !important;
+    max-width: 240px !important;
+  }
+}
+
+/* ================================================================
+   GALERIA v3 — limit 4 zdjęć tylko na telefonach i tabletach
+================================================================ */
+@media (max-width: 960px) {
+  .gallery-grid.gallery-mobile-mode.collapsed .gallery-item {
+    display: block !important;
+  }
+
+  .gallery-grid.gallery-mobile-mode.collapsed .gallery-item.gi-hidden,
+  .gallery-grid.gallery-mobile-mode.collapsed .gallery-item.mobile-limit-hidden,
+  .gallery-grid.gallery-mobile-mode .gallery-item.gi-hidden,
+  .gallery-grid.gallery-mobile-mode .gallery-item.mobile-limit-hidden {
+    display: none !important;
+  }
+
+  .gallery-toggle-btn {
+    min-height: 42px;
+  }
+}
+
+

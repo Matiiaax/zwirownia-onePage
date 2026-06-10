@@ -2207,4 +2207,103 @@ nav.scrolled + .mobile-menu {
   }
 }
 
+/* ================================================================
+   POPRAWKI — hero, footer i przycisk telefoniczny iOS
+================================================================ */
 
+/* Footer: znaczniki listy wyśrodkowane względem tekstu */
+.footer-col li {
+  align-items: center !important;
+}
+
+.footer-col li::before {
+  margin-top: 0 !important;
+  line-height: 1 !important;
+}
+
+/* iPhone/Safari: bez białej ramki przy dłuższym przytrzymaniu przycisku tel. */
+.pricing-box .btn-dark,
+.hero-btns .btn,
+.route-btn,
+.contact-card[href^="tel:"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pricing-box .btn-dark:focus,
+.pricing-box .btn-dark:focus-visible,
+.pricing-box .btn-dark:active {
+  outline: none !important;
+  border-color: var(--dark) !important;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.22) !important;
+}
+
+.pricing-box .btn-dark:active {
+  background: #111 !important;
+  color: var(--yellow) !important;
+  transform: translateY(0) !important;
+}
+
+
+
+/* ================================================================
+   POPRAWKI — lepszy układ hero i hasła kruszywa
+================================================================ */
+.hero-badge {
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 18px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(245,166,35,0.15);
+  border: 1px solid rgba(245,166,35,0.62);
+  color: var(--yellow-light);
+  font-family: 'Oswald', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.24);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hero-badge::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 9px;
+  border-radius: 50%;
+  background: var(--yellow);
+  box-shadow: 0 0 0 5px rgba(245,166,35,0.18);
+  vertical-align: 1px;
+}
+
+.hero-sub {
+  max-width: 620px;
+  padding-left: 18px;
+  border-left: 3px solid rgba(245,166,35,0.78);
+  color: rgba(255,255,255,0.84);
+}
+
+@media (max-width: 960px) {
+  .hero-badge {
+    margin-bottom: 13px !important;
+    padding: 7px 13px !important;
+    font-size: 0.66rem !important;
+    letter-spacing: 1px !important;
+  }
+
+  .hero-sub {
+    padding-left: 13px !important;
+    border-left-width: 2px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-badge {
+    font-size: 0.61rem !important;
+    letter-spacing: 0.75px !important;
+  }
+}

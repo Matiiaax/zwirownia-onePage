@@ -14,7 +14,7 @@
 }
 
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+html { scroll-behavior:auto; }
 body { font-family:'Nunito', sans-serif; background:#fff; color:var(--dark); overflow-x:hidden; }
 
 /* -- SCROLLBAR -- */
@@ -2309,86 +2309,42 @@ nav.scrolled + .mobile-menu {
 }
 
 
-/* ================================================================
-   PERFORMANCE PATCH — wklej na SAMYM KOŃCU pliku style.css
-   Naprawia cięcie scrola na telefonach i słabszych urządzeniach
-================================================================ */
 
-/* 1. Wyłącz natywny smooth scroll — kolizja z JS-owym scrollem */
+
+/* ================================================================
+   ANCHOR / SCROLL PERFORMANCE FIX
+   Only scroll behavior is changed here. Text/card/gallery reveal
+   animations stay untouched.
+================================================================ */
 html {
   scroll-behavior: auto !important;
 }
 
-/* 2. Nav: promote to own layer — GPU zamiast CPU przy scroll */
-nav {
-  will-change: transform;
-  transform: translateZ(0);
+section[id],
+#hero,
+#uslugi,
+#obszar,
+#galeria,
+#cennik,
+#kontakt {
+  scroll-margin-top: 92px;
 }
 
-/* 3. backdrop-filter: blast only on capable devices
-   Na słabych GPU to najdroższy efekt CSS — wyłączamy go gdy
-   urządzenie ma ograniczoną moc obliczeniową                  */
-@media (max-width: 960px) and (not (prefers-reduced-motion: reduce)) {
-  nav,
-  .mobile-menu,
-  .hero-btns .btn-outline,
-  .stat-pill {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    /* kompensacja: lekko bardziej nieprzezroczyste tło */
-  }
-
-  nav {
-    background: rgba(16, 16, 16, 0.96) !important;
-  }
-
-  nav.scrolled {
-    background: rgba(14, 14, 14, 0.99) !important;
-  }
-
-  .mobile-menu {
-    background: rgba(13, 13, 13, 0.99) !important;
-  }
-
-  .hero-btns .btn-outline {
-    background: rgba(0, 0, 0, 0.55) !important;
+@media (max-width: 960px) {
+  section[id],
+  #hero,
+  #uslugi,
+  #obszar,
+  #galeria,
+  #cennik,
+  #kontakt {
+    scroll-margin-top: 72px;
   }
 }
 
-/* 4. Galeria i karty: hardware acceleration dla transform */
-.gallery-item,
-.service-card,
-.machine-card {
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-/* 5. Lightbox overlay: własna warstwa kompozytora */
-.lb-overlay {
-  will-change: opacity;
-  transform: translateZ(0);
-}
-
-/* 6. Hero: pełna separacja warstw żeby scroll był płynny */
-#hero {
-  will-change: auto; /* nie "scroll-position" — to by było za dużo */
-  transform: translateZ(0);
-}
-
-/* 7. Scroll top button: własna warstwa */
+.nav-links a,
+.mobile-menu a,
 #scrollTop {
-  will-change: opacity, transform;
-}
-
-/* 8. Wyłącz kosztowne animacje @keyframes przy reduced-motion
-   (dostępność + wydajność w jednym)                          */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }

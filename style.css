@@ -242,6 +242,7 @@ nav.scrolled .nav-logo img {
 }
 .hero-sub strong { color:#fff; font-weight:800; }
 .hero-years {
+  margin-top: 15px;
   display:inline-flex; align-items:center; gap:13px;
   background:rgba(245,166,35,0.96); padding:10px 19px;
   margin-bottom:22px; border-radius:8px;
@@ -1044,16 +1045,17 @@ footer {
 
 /* -- POJEDYNCZY KAFEL -- */
 .gallery-item {
-  position: relative;
-  cursor: pointer;
-  background: var(--dark);
-  border-radius: 8px;
-  overflow: hidden;
+  width: 100%;
   aspect-ratio: 4 / 3;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-  transition: box-shadow 0.28s, transform 0.28s;
-  opacity: 0;
-  transform: translateY(14px) scale(0.98);
+  overflow: hidden;
+}
+
+.gallery-item img {
+  width: 800px;
+  height: 600px;
+  max-width: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .gallery-item.gi-visible {
@@ -2348,3 +2350,112 @@ section[id],
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
 }
+
+
+/* ================================================================
+   2026-06-17 — usunięcie kart statystyk i badge na mobile/tablet,
+   nowy tekst nad nagłówkiem hero na ekranach ≤960px
+================================================================ */
+
+/* domyślnie (desktop): pokazujemy stary badge, chowamy nowy */
+.hero-badge-mobile { display: none; }
+
+@media (max-width: 960px) {
+  /* karty: 100% naturalne kruszywo / VAT / Podlasie / Skieblewo — schowane */
+  .hero-stats {
+    display: none !important;
+  }
+
+  /* stary badge "Kruszywo prosto ze żwirowni" — schowany */
+  .hero-badge-desktop {
+    display: none !important;
+  }
+
+  /* nowy badge z tekstem o tradycji — widoczny w jego miejscu */
+  .hero-badge-mobile {
+    display: inline-flex !important;
+  }
+
+  /* skoro karty zniknęły, hero-visual nie musi rezerwować dla nich miejsca */
+  .hero-visual {
+    display: none !important;
+  }
+}
+
+/* ================================================================
+   2026-06-17 — usuniecie badge i kart statystyk na mobile/tablet,
+   nowy tekst pod tytulem hero na ekranach <=960px
+================================================================ */
+
+/* domyslnie (desktop) blok mobilny jest schowany */
+.hero-mobile-tagline {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  /* karty: 100% naturalne kruszywo / VAT / Podlasie / Skieblewo — schowane */
+  .hero-stats {
+    display: none !important;
+  }
+
+  /* caly hero-visual (kolumna z kartami) nie zajmuje miejsca */
+  .hero-visual {
+    display: none !important;
+  }
+
+  /* stary badge "Kruszywo prosto ze zwirowni" nad tytulem — schowany w ogole */
+  .hero-badge {
+    display: none !important;
+  }
+
+  /* nowy, zwykly tekst pod tytulem hero, bez ramki/pilla */
+  .hero-mobile-tagline {
+    display: block !important;
+    margin-top: 18px;
+    margin-bottom: 22px;
+  }
+
+  .hero-mobile-tagline .hmt-main {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(0.95rem, 3.6vw, 1.12rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.4;
+    margin: 0 0 10px 0;
+  }
+
+  .hero-mobile-tagline .hmt-sub {
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    color: rgba(255,255,255,0.62);
+    margin: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-mobile-tagline {
+    margin-top: 14px;
+    margin-bottom: 18px;
+  }
+
+  .hero-mobile-tagline .hmt-main {
+    font-size: 0.92rem;
+    margin-bottom: 8px;
+  }
+
+  .hero-mobile-tagline .hmt-sub {
+    font-size: 0.78rem;
+  }
+}
+
+
+/* Animacja pojawiania się tekstu "Kruszywo prosto ze żwirowni" */
+.hero-mobile-tagline .hmt-main {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: fadeUp 0.7s 0.18s ease both;
+}
+
+

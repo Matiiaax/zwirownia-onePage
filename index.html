@@ -39,14 +39,19 @@
   <div class="hero-corner"></div>
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-badge">Kruszywo prosto ze żwirowni</div>
+      <div class="hero-badge hero-badge-desktop">Kruszywo prosto ze żwirowni</div>
+      <div class="hero-badge hero-badge-mobile">Miejsce, gdzie tradycja łączy się z rzeczywistością</div>
       <h1 class="hero-title">
         <span class="line-small">Żwirownia Skieblewo · Lipsk</span>
         <span>Miejsce, gdzie tradycja</span>
         <span class="accent">łączy się z nowoczesnością</span>
       </h1>
+      <div class="hero-mobile-tagline">
+        <p class="hmt-main">Kruszywo prosto ze żwirowni</p>
+      </div>
+      </h1>
       <p class="hero-sub">
-        Działamy na terenie <strong>województwa podlaskiego</strong>. Wydobywamy i przerabiamy kopaliny, oferując <strong>kruszywa sortowane i płukane</strong> z własnej żwirowni. Zapewniamy transport oraz realizację dróg, placów i utwardzeń.
+        Działamy na terenie <strong>województwa podlaskiego</strong>. Wydobywamy i przerabiamy kopaliny, oferując <strong>kruszywa sortowane i płukane</strong> z własnej żwirowni. Zapewniamy transport oraz realizację dróg, placów i utwardzeń.Oferujemy również <strong>odśnieżanie dróg</strong> w sezonie zimowym.
       </p>
       <div class="hero-years">
         <span class="num" id="counter12">0</span>
@@ -224,8 +229,8 @@
         </div>
       </div>
 
-      <div class="gallery-item" data-cat="kruszywo" data-index="3">
-        <img src="img/gallery/zdjecie5.webp" alt="kruszywo" loading="lazy">
+      <div class="gallery-item" data-cat="sprzet" data-index="3">
+        <img src="img/gallery/zdjecie31.webp" alt="kruszywo" loading="lazy">
         <div class="gallery-overlay">
           <div class="gallery-ov-icon">🔍</div>
         </div>
@@ -239,7 +244,7 @@
       </div>
 
       <div class="gallery-item" data-cat="sprzet" data-index="5">
-        <img src="img/gallery/zdjecie7.webp" alt="Wywrotka 3-osiowa" loading="lazy">
+        <img src="img/gallery/zdjecie32.webp" alt="Wywrotka 3-osiowa" loading="lazy">
         <div class="gallery-overlay">
           <div class="gallery-ov-icon">🔍</div>
         </div>
@@ -295,7 +300,7 @@
       </div>
 
       <div class="gallery-item" data-cat="sprzet" data-index="13">
-        <img src="img/gallery/zdjecie16.webp" alt="Plac manewrowy" loading="lazy">
+        <img src="img/gallery/zdjecie33.webp" alt="Plac manewrowy" loading="lazy">
         <div class="gallery-overlay">
           <div class="gallery-ov-icon">🔍</div>
         </div>
@@ -343,8 +348,8 @@
         </div>
       </div>
 
-      <div class="gallery-item" data-cat="drogi" data-index="20">
-        <img src="img/gallery/zdjecie23.webp" alt="Sprzęt na budowie" loading="lazy">
+      <div class="gallery-item" data-cat="sprzet" data-index="20">
+        <img src="img/gallery/zdjecie34.webp" alt="Sprzęt na budowie" loading="lazy">
         <div class="gallery-overlay">
           <div class="gallery-ov-icon">🔍</div>
         </div>
@@ -387,6 +392,18 @@
 
       <div class="gallery-item" data-cat="sprzet" data-index="26">
         <img src="img/gallery/zdjecie30.webp" alt="Realizacja dla gminy" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="sprzet" data-index="26">
+        <img src="img/gallery/zdjecie35.webp" alt="Realizacja dla gminy" loading="lazy">
+        <div class="gallery-overlay">
+          <div class="gallery-ov-icon">🔍</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="sprzet" data-index="26">
+        <img src="img/gallery/zdjecie36.webp" alt="Realizacja dla gminy" loading="lazy">
         <div class="gallery-overlay">
           <div class="gallery-ov-icon">🔍</div>
         </div>
@@ -491,10 +508,17 @@
       <div class="contact-form">
         <div class="form-title">Napisz do nas</div>
         <div class="form-sub">Opisz czego potrzebujesz — odezwiemy się szybko z wyceną.</div>
-        <form action="https://formsubmit.co/tomekwnukowski@wp.pl" method="POST" id="contactForm">
+        <form action="https://formspree.io/f/xjgddene" method="POST" id="contactForm">
+          <!--
+            FORMULARZ FORMSPREE:
+            1. Załóż konto na https://formspree.io
+            2. Utwórz nowy formularz
+            3. Skopiuj endpoint, np. https://formspree.io/f/abcxyz
+            4. Wklej go powyżej w action zamiast https://formspree.io/f/TWOJ_FORM_ID
+          -->
           <input type="hidden" name="_subject" value="Nowe zapytanie ze strony DROGMET">
-          <input type="hidden" name="_next" value="https://drogmet.pl/dziekujemy">
-          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_language" value="pl">
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none">
           <div class="form-row">
             <div class="form-group">
               <label>Imię i nazwisko *</label>
@@ -528,6 +552,7 @@
           </div>
           <button type="submit" class="form-submit" id="submitBtn">Wyślij zapytanie →</button>
           <p class="form-note">* Pola wymagane. Dane nie są udostępniane osobom trzecim.</p>
+          <p class="form-note" id="formStatus" aria-live="polite"></p>
         </form>
       </div>
     </div>

@@ -391,19 +391,78 @@ window.addEventListener('resize', () => {
     });
   });
 
-  // FORM submit animation
+  // FORM submit - Formspree
   const form = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
-  if (form) {
-    form.addEventListener('submit', function(e) {
+  const formStatus = document.getElementById('formStatus');
+
+  function setFormStatus(message, type) {
+    if (!formStatus) return;
+    formStatus.textContent = message;
+    formStatus.style.color = type === 'success' ? '#27ae60' : '#c0392b';
+    formStatus.style.fontWeight = '700';
+  }
+
+  function resetSubmitButton() {
+    if (!submitBtn) return;
+    submitBtn.textContent = 'Wyślij zapytanie →';
+    submitBtn.style.background = '';
+    submitBtn.style.color = '';
+    submitBtn.disabled = false;
+  }
+
+  if (form && submitBtn) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const endpoint = form.getAttribute('action');
+
+      if (!endpoint || endpoint.includes('TWOJ_FORM_ID')) {
+        setFormStatus('Najpierw wklej swój endpoint z Formspree w atrybucie action formularza.', 'error');
+        return;
+      }
+
       submitBtn.textContent = 'Wysyłanie...';
       submitBtn.style.background = '#888';
       submitBtn.disabled = true;
-      setTimeout(() => {
-        submitBtn.textContent = '✓ Wysłano! Odezwiemy się wkrótce.';
-        submitBtn.style.background = '#27ae60';
-        submitBtn.style.color = '#fff';
-      }, 1500);
+      setFormStatus('', '');
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (response.ok) {
+          submitBtn.textContent = '✓ Wysłano!';
+          submitBtn.style.background = '#27ae60';
+          submitBtn.style.color = '#fff';
+          setFormStatus('Dziękujemy. Wiadomość została wysłana.', 'success');
+          form.reset();
+
+          setTimeout(resetSubmitButton, 3500);
+          return;
+        }
+
+        let errorMessage = 'Nie udało się wysłać formularza. Spróbuj ponownie albo zadzwoń.';
+        try {
+          const data = await response.json();
+          if (data && data.errors && data.errors.length) {
+            errorMessage = data.errors.map(function(error) {
+              return error.message;
+            }).join(' ');
+          }
+        } catch (err) {}
+
+        setFormStatus(errorMessage, 'error');
+        resetSubmitButton();
+      } catch (err) {
+        setFormStatus('Brak połączenia albo błąd formularza. Spróbuj ponownie.', 'error');
+        resetSubmitButton();
+      }
     });
   }
 

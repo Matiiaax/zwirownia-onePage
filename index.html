@@ -3,17 +3,212 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="format-detection" content="telephone=no">
 <title>P.U.H. DROGMET – Żwirownia Skieblewo | Lipsk</title>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<link rel="stylesheet" href="style.css?v=anchor-v2">
+<link rel="icon" type="image/png" href="favicon-128x128.png">
+<link rel="preload" as="image" href="img/gallery/zdjecie1.webp" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=fallback" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=fallback"></noscript>
+
+<!-- ================================================================
+     CRITICAL CSS (inline) — tylko to, co jest potrzebne, żeby
+     pierwszy ekran (nav + hero) wyrenderował się bez czekania na
+     pobranie całego style.css. Resztę stylów ładujemy poniżej
+     asynchronicznie (ten sam trik co przy fontach).
+     Te reguły MUSZĄ pozostać identyczne z odpowiadającymi im
+     regułami w style.css — jeśli edytujesz nav/hero w style.css,
+     przenieś zmianę też tutaj.
+================================================================ -->
+<style>
+:root{--yellow:#F5A623;--yellow-dark:#D4891A;--yellow-light:#FFD26F;--black:#1E1E1E;--dark:#2B2B2B;--gray:#6B6B6B;--light-gray:#F5F5F5;--white:#FFFFFF;--sand:#C9A96E;--border:#E0E0E0}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto}
+body{font-family:'Nunito',sans-serif;background:#fff;color:var(--dark);overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(16, 16, 16, 0.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.10);padding:0 40px;height:80px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 14px 42px rgba(0,0,0,0.24);transition:height 0.3s,background 0.3s,border-color 0.3s}
+nav.scrolled{height:63px;background:rgba(16, 16, 16, 0.8);border-bottom:1px solid rgba(245,166,35,0.38)}
+.nav-logo{display:flex;align-items:center;text-decoration:none;padding:0}
+.nav-logo img{height:62px;width:auto;display:block;object-fit:contain;filter:brightness(1.05) contrast(1.28) saturate(1.10) drop-shadow(0 0 7px rgba(202,147,59,0.678))}
+nav.scrolled .nav-logo img{height:52px}
+.nav-links{display:flex;gap:26px;list-style:none;align-items:center}
+.nav-links a{font-family:'Oswald',sans-serif;font-size:0.78rem;letter-spacing:1.15px;text-transform:uppercase;color:rgba(255,255,255,0.82);text-decoration:none;position:relative;padding:10px 2px 9px;border-radius:6px;z-index:1;transition:color 0.2s,transform 0.2s}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--yellow);transition:width 0.3s}
+.nav-links a::before{content:'';position:absolute;left:50%;bottom:0;width:0;height:100%;background:rgba(245,166,35,0.08);border-radius:6px;transform:translateX(-50%);z-index:-1;transition:width 0.25s ease,background 0.25s ease}
+.nav-links a:hover{color:var(--yellow);transform:translateY(-2px)}
+.nav-links a:hover::before{width:calc(100% + 18px)}
+.nav-links a:hover::after{width:100%}
+.nav-links a:first-child{color:rgba(255,255,255,0.82)}
+.nav-links a:first-child::after{width:0}
+.nav-links a:first-child:hover{color:var(--yellow)}
+.nav-links a:first-child:hover::after{width:100%}
+.nav-cta{position:relative;overflow:hidden;background:rgba(245,166,35,0.04) !important;color:#fff !important;border:1.5px solid rgba(245,166,35,0.9) !important;padding:9px 18px !important;border-radius:7px;font-weight:700 !important;box-shadow:none;transition:transform 0.2s,border-color 0.3s !important}.nav-cta::before{content:'';position:absolute;inset:0;background:var(--yellow);transform:scaleX(0);transform-origin:left;transition:transform 0.25s ease;z-index:-1}
+.nav-cta:hover{color:var(--dark) !important;border-color:var(--yellow) !important;transform:translateY(-2px);box-shadow:0 10px 24px rgba(245,166,35,0.22);background:var(--yellow) !important}.nav-cta:hover::before{transform:scaleX(1)}
+.nav-cta:hover::after{display:none !important}
+.nav-links a,.mobile-menu a,#scrollTop{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:26px;height:3px;background:#fff;border-radius:2px;transition:all 0.3s}
+.hamburger.active span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+.mobile-menu{display:flex;flex-direction:column;gap:0;position:fixed;top:80px;left:0;right:0;z-index:999;padding:0 24px;background:rgba(13,13,13,0.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:2px solid transparent;max-height:0;overflow:hidden;opacity:0;pointer-events:none;transform:translateY(-8px);transition:top 0.30s ease,max-height 0.42s cubic-bezier(0.4,0,0.2,1),opacity 0.30s ease,transform 0.30s ease,border-color 0.32s ease,box-shadow 0.32s ease}
+nav.scrolled + .mobile-menu{top:63px}
+.mobile-menu.open{max-height:500px;opacity:1;pointer-events:all;transform:translateY(0);border-color:var(--yellow);box-shadow:0 16px 40px rgba(0,0,0,0.35);padding:16px 24px 28px}
+.mobile-menu a{opacity:0;transform:translateX(-12px);transition:opacity 0.28s ease,transform 0.28s ease,color 0.2s,padding-left 0.2s,background 0.2s;padding:12px 4px;border-bottom:1px solid rgba(255,255,255,0.1);font-family:'Oswald',sans-serif;font-size:0.88rem;letter-spacing:0.9px;text-transform:uppercase;color:#fff;text-decoration:none}
+.mobile-menu a:last-child{border:none;background:var(--yellow);color:var(--dark);text-align:center;padding:12px;font-weight:700;border-radius:6px;margin-top:4px;opacity:0;transform:translateX(-12px)}
+.mobile-menu.open a{opacity:1;transform:translateX(0)}
+.mobile-menu.open a:nth-child(1){transition-delay:0.06s}
+.mobile-menu.open a:nth-child(2){transition-delay:0.11s}
+.mobile-menu.open a:nth-child(3){transition-delay:0.16s}
+.mobile-menu.open a:nth-child(4){transition-delay:0.21s}
+.mobile-menu.open a:nth-child(5){transition-delay:0.26s}
+.mobile-menu a:hover{color:var(--yellow);padding-left:8px}
+.mobile-menu a:last-child:hover{background:var(--yellow-dark);color:var(--dark);padding-left:12px}
+
+#hero{min-height:100vh;background:url('img/gallery/zdjecie1.webp') center/cover no-repeat;display:flex;align-items:center;padding:120px 40px 70px;position:relative;overflow:hidden;isolation:isolate}
+#hero{padding-top:142px}
+#hero::before{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,rgba(30,30,30,0.90) 0%,rgba(30,30,30,0.76) 42%,rgba(30,30,30,0.50) 72%,rgba(30,30,30,0.66) 100%)}
+#hero::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 22% 22%,rgba(245,166,35,0.20),transparent 34%),linear-gradient(180deg,rgba(0,0,0,0.08),rgba(0,0,0,0.58))}
+.hero-pattern{position:absolute;inset:0;pointer-events:none;z-index:2;opacity:0.32;background-image:repeating-linear-gradient(0deg,transparent,transparent 44px,rgba(255,255,255,0.035) 44px,rgba(255,255,255,0.035) 45px),repeating-linear-gradient(90deg,transparent,transparent 44px,rgba(245,166,35,0.055) 44px,rgba(245,166,35,0.055) 45px)}
+.hero-corner{position:absolute;bottom:-160px;right:-120px;width:560px;height:560px;z-index:2;pointer-events:none;background:radial-gradient(ellipse at bottom right,rgba(245,166,35,0.24) 0%,transparent 68%)}
+.hero-inner{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.08fr 0.92fr;gap:54px;align-items:center;position:relative;z-index:3}
+.hero-content{max-width:680px}
+.hero-badge{width:fit-content;max-width:100%;display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;padding:8px 16px;border-radius:999px;background:rgba(245,166,35,0.15);border:1px solid rgba(245,166,35,0.62);color:var(--yellow-light);font-family:'Oswald',sans-serif;font-size:0.78rem;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;box-shadow:0 12px 30px rgba(0,0,0,0.24);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:fadeUp 0.7s ease both}
+.hero-badge::before{content:'';display:inline-block;width:8px;height:8px;margin-right:9px;border-radius:50%;background:var(--yellow);box-shadow:0 0 0 5px rgba(245,166,35,0.18);vertical-align:1px;animation:blink 1.5s ease infinite}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.6)}}
+.hero-badge-mobile{display:none}
+.hero-mobile-tagline{display:none}
+.hero-title{font-family:'Oswald',sans-serif;font-size:clamp(2.22rem,5.1vw,4.55rem);font-weight:700;line-height:0.98;color:#fff;margin-bottom:16px;animation:fadeUp 0.7s 0.1s ease both;display:flex;flex-direction:column;gap:8px;text-shadow:0 8px 28px rgba(0,0,0,0.55)}
+.hero-title .line-small{display:inline-flex;align-self:flex-start;width:auto;max-width:100%;font-family:'Nunito',sans-serif;font-size:0.205em;letter-spacing:0.85px;text-transform:none;font-weight:800;padding:7px 12px;margin-bottom:14px;border:1px solid rgba(245,166,35,0.42);border-radius:999px;background:rgba(0,0,0,0.22);color:rgba(255,255,255,0.94);box-shadow:0 10px 28px rgba(0,0,0,0.18);line-height:1.1}
+.hero-title .accent{color:var(--yellow);display:block}
+.hero-title .line2{display:block;font-family:'Nunito',sans-serif;font-size:0.275em;color:#fff;font-weight:800;letter-spacing:0.5px;text-transform:none;margin-top:20px}
+.hero-sub{max-width:620px;font-size:0.96rem;color:rgba(255,255,255,0.84);line-height:1.7;margin-bottom:18px;font-weight:400;padding-left:18px;border-left:3px solid rgba(245,166,35,0.78);animation:fadeUp 0.7s 0.2s ease both}
+.hero-sub strong{color:#fff;font-weight:800}
+.hero-years{margin-top:15px;display:inline-flex;align-items:center;gap:13px;background:rgba(245,166,35,0.96);padding:10px 19px;margin-bottom:22px;border-radius:8px;box-shadow:0 16px 36px rgba(0,0,0,0.28);animation:fadeUp 0.7s 0.25s ease both}
+.hero-years .num{font-family:'Oswald',sans-serif;font-size:2.5rem;font-weight:700;color:var(--dark);line-height:1}
+.hero-years .txt{font-size:0.77rem;text-transform:uppercase;font-weight:900;color:var(--dark);line-height:1.18;letter-spacing:0.8px}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;animation:fadeUp 0.7s 0.3s ease both}
+.hero-btns .btn{min-height:49px;display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 24px;border-radius:8px;font-family:'Nunito',sans-serif;font-size:0.9rem;font-weight:900;letter-spacing:0.2px;text-transform:none;text-decoration:none;border:2px solid transparent;-webkit-tap-highlight-color:transparent;transition:transform 0.25s,box-shadow 0.25s,background 0.25s,border-color 0.25s,color 0.25s}
+.hero-btns .btn-primary{background:var(--yellow);color:var(--dark);border-color:var(--yellow);box-shadow:0 12px 28px rgba(245,166,35,0.28)}
+.hero-btns .btn-primary::before{content:'➤';font-size:0.86rem;line-height:1}
+.hero-btns .btn-primary:hover{background:var(--yellow-dark);border-color:var(--yellow-dark);transform:translateY(-2px);box-shadow:0 16px 34px rgba(245,166,35,0.38)}
+.hero-btns .btn-outline{background:rgba(0,0,0,0.22);color:#fff;border-color:rgba(245,166,35,0.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.hero-btns .btn-outline::before{content:'☎';color:var(--yellow);font-size:0.95rem;line-height:1}
+.hero-btns .btn-outline:hover{background:rgba(245,166,35,0.12);border-color:var(--yellow);color:#fff;transform:translateY(-2px);box-shadow:0 14px 32px rgba(0,0,0,0.18)}
+.hero-visual{position:relative;display:flex;align-items:center;justify-content:center;animation:fadeUp 0.7s 0.4s ease both}
+.hero-visual{justify-content:center}
+.hero-visual>div{width:min(300px,100%);max-width:300px;margin-left:auto;margin-right:auto}
+.hero-stats{display:grid;grid-template-columns:1fr;width:100%;max-width:300px;gap:10px;margin-top:0}
+.stat-pill{background:rgba(30,30,30,0.58);border:1px solid rgba(255,255,255,0.16);padding:13px 15px;border-radius:13px;border-left:4px solid var(--yellow);box-shadow:0 12px 32px rgba(0,0,0,0.18);backdrop-filter:blur(12px);width:100%}
+.stat-pill .sv{font-family:'Oswald',sans-serif;font-size:1.18rem;color:#fff;font-weight:700}
+.stat-pill .sl{font-size:0.62rem;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.68);margin-top:2px;line-height:1.25}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+section[id],#hero,#uslugi,#obszar,#galeria,#cennik,#kontakt{scroll-margin-top:92px}
+
+/* Lightbox (galeria) chowany od pierwszej klatki — pełne style są
+   w style.css, ale ono ładuje się asynchronicznie, więc bez tej
+   linii overlay i przyciski (✕ ‹ ›) byłyby widoczne na ułamek
+   sekundy przed doładowaniem stylu. */
+.lb-overlay{position:fixed;inset:0;z-index:10000;opacity:0;pointer-events:none}
+
+/* Przycisk "do góry" — domyślnie schowany (chowa się sam przez JS po
+   przewinięciu, ale bez stylu z style.css byłby widoczny od startu). */
+#scrollTop{position:fixed;bottom:32px;right:32px;z-index:500;opacity:0;pointer-events:none}
+
+@media (max-width:960px){
+  nav{padding:0 18px;height:68px}
+  .nav-logo img{height:54px}
+  nav.scrolled{height:58px}
+  nav.scrolled .nav-logo img{height:46px}
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  .mobile-menu{top:68px !important}
+  nav.scrolled + .mobile-menu{top:58px !important}
+  #hero{min-height:auto;padding:96px 18px 50px;padding-top:108px !important;padding-bottom:38px !important}
+  .hero-inner{grid-template-columns:1fr;gap:24px !important}
+  .hero-content{max-width:100%}
+  .hero-title{gap:6px !important;margin-bottom:14px !important}
+  .hero-title .line-small{font-size:clamp(0.85rem,2.8vw,1.05rem) !important;letter-spacing:0.7px;margin-bottom:12px !important;padding:7px 11px !important;color:rgba(255,255,255,0.95) !important}
+  .hero-badge,.hero-stats,.hero-visual{display:none !important}
+  .hero-mobile-tagline{display:block !important;margin-top:18px;margin-bottom:22px}
+  .hero-mobile-tagline .hmt-main{font-family:'Nunito',sans-serif;font-size:clamp(0.95rem,3.6vw,1.12rem);font-weight:800;color:#fff;line-height:1.4;margin:0 0 10px 0;opacity:0;transform:translateY(18px);animation:fadeUp 0.7s 0.18s ease both}
+  .hero-mobile-tagline .hmt-sub{font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:600;letter-spacing:0.4px;color:rgba(255,255,255,0.62);margin:0}
+  .hero-btns{display:none !important}
+  section[id],#hero,#uslugi,#obszar,#galeria,#cennik,#kontakt{scroll-margin-top:72px}
+}
+@media (min-width:961px){ .mobile-menu{display:none !important} }
+@media (max-width:768px){
+  nav{height:62px;padding:0 16px}
+  .nav-logo img{height:48px}
+  nav.scrolled{height:54px}
+  nav.scrolled .nav-logo img{height:42px}
+  .mobile-menu{top:62px !important}
+  nav.scrolled + .mobile-menu{top:54px !important}
+  #hero{padding:88px 16px 44px;padding-top:100px !important;padding-bottom:36px !important}
+  .hero-title{font-size:clamp(1.9rem,8.5vw,2.9rem);gap:4px}
+  .hero-title .line-small{font-size:clamp(0.83rem,3.8vw,1rem) !important;margin-bottom:11px !important}
+  .hero-title .line2{font-size:0.28em;margin-top:14px}
+  .hero-sub{font-size:0.88rem;line-height:1.64;margin-bottom:14px}
+  .hero-years{padding:9px 14px;gap:10px;margin-bottom:18px}
+  .hero-years .num{font-size:2rem}
+  .hero-years .txt{font-size:0.72rem}
+}
+@media (max-width:600px){
+  nav{height:58px;padding:0 14px}
+  .nav-logo img{height:44px}
+  nav.scrolled{height:52px}
+  .mobile-menu{top:58px !important}
+  nav.scrolled + .mobile-menu{top:52px !important}
+  #hero{padding:80px 14px 40px;padding-top:92px !important;padding-bottom:34px !important}
+  .hero-title{font-size:clamp(1.75rem,9.5vw,2.5rem);gap:3px}
+  .hero-title .line-small{font-size:clamp(0.8rem,4.2vw,0.96rem) !important;letter-spacing:0.4px;color:rgba(255,255,255,0.96) !important}
+  .hero-title .line2{margin-top:12px}
+  .hero-sub{font-size:0.84rem;margin-bottom:12px}
+  .hero-years{padding:8px 13px;gap:10px;margin-bottom:16px}
+  .hero-years .num{font-size:1.75rem}
+  .hero-years .txt{font-size:0.66rem}
+  .hero-mobile-tagline{margin-top:14px;margin-bottom:18px}
+  .hero-mobile-tagline .hmt-main{font-size:0.92rem;margin-bottom:8px}
+  .hero-mobile-tagline .hmt-sub{font-size:0.78rem}
+}
+@media (max-width:420px){
+  nav{padding:0 12px;height:56px}
+  .nav-logo img{height:40px}
+  #hero{padding:74px 12px 36px;padding-top:88px !important}
+  .hero-title{font-size:clamp(1.6rem,10vw,2.2rem)}
+  .hero-title .line-small{font-size:clamp(0.76rem,4.5vw,0.9rem) !important}
+  .hero-sub{font-size:0.82rem}
+  .mobile-menu{top:56px !important}
+  nav.scrolled + .mobile-menu{top:52px !important}
+}
+@media (max-width:360px){
+  nav{padding:0 10px;height:54px}
+  .nav-logo img{height:36px}
+  .hamburger span{width:22px}
+  #hero{padding:68px 10px 32px}
+  .hero-title{font-size:clamp(1.45rem,11vw,1.95rem);gap:2px}
+  .hero-title .line-small{font-size:0.77rem !important}
+  .hero-btns .btn{font-size:0.8rem;padding:10px 14px;min-height:43px}
+  .mobile-menu{top:54px !important}
+  nav.scrolled + .mobile-menu{top:52px !important}
+}
+</style>
+
+<!-- Resztę CSS (services, galeria, mapa, kontakt, footer, lightbox...)
+     ładujemy nieblokująco — ten sam wzorzec co przy fontach.
+     noscript zapewnia poprawne wyświetlanie bez JS. -->
+<link rel="preload" as="style" href="style.css?v=ios-links-fix-1" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="style.css?v=ios-links-fix-1"></noscript>
 </head>
 <body>
 
 <!-- NAV -->
 <nav id="navbar">
-  <a href="#" class="nav-logo"><img src="logo2.png" alt="P.U.H. DROGMET Logo"></a>
+  <a href="#" class="nav-logo"><img src="logo2.webp" alt="P.U.H. DROGMET Logo"></a>
   <ul class="nav-links">
     <li><a href="#uslugi">Usługi</a></li>
     <li><a href="#obszar">Obszar</a></li>
@@ -51,7 +246,7 @@
       </div>
       </h1>
       <p class="hero-sub">
-        Działamy na terenie <strong>województwa podlaskiego</strong>. Wydobywamy i przerabiamy kopaliny, oferując <strong>kruszywa sortowane i płukane</strong> z własnej żwirowni. Zapewniamy transport oraz realizację dróg, placów i utwardzeń.Oferujemy również <strong>odśnieżanie dróg</strong> w sezonie zimowym.
+        Działamy na terenie <strong>województwa podlaskiego</strong>. Wydobywamy i przerabiamy kopaliny, oferując <strong>kruszywa sortowane i płukane</strong> z własnej żwirowni. Zapewniamy transport oraz realizację dróg, placów i utwardzeń. Oferujemy również <strong>odśnieżanie dróg</strong> w sezonie zimowym.
       </p>
       <div class="hero-years">
         <span class="num" id="counter12">0</span>
@@ -67,7 +262,7 @@
 
         <div class="hero-stats">
           <div class="stat-pill"><div class="sv">100%</div><div class="sl">Naturalne kruszywo</div></div>
-          <div class="stat-pill"><div class="sv">VAT</div><div class="sl">Faktury dla firm i gmin</div></div>
+          <div class="stat-pill"><div class="sv">Kruszywo</div><div class="sl">Zgodne z normami</div></div>
           <div class="stat-pill"><div class="sv">Podlasie</div><div class="sl">Region obsługi</div></div>
           <div class="stat-pill"><div class="sv">Skieblewo</div><div class="sl">Własna żwirownia</div></div>
         </div>
@@ -163,7 +358,7 @@
           <div class="city-item">
             <div class="city-dot"></div>
             <div class="city-name">Dąbrowa Białostocka</div>
-            <span class="city-dist">~35 km</span>
+            <span class="city-dist">~10 km</span>
           </div>
 
           <div class="city-item">
@@ -186,12 +381,6 @@
   </div>
 </section>
 
-<!-- ================================================================
-  ZASTĄP sekcję "MASZYNY" — oraz zmień w navbarze:
-    href="#maszyny" → href="#galeria"
-    tekst "Maszyny i pojazdy" → "Galeria"
-================================================================ -->
-
 <!-- GALERIA -->
 <section id="galeria" class="section section-gray">
   <div class="container">
@@ -209,7 +398,7 @@
     <div class="gallery-wrap">
       <div class="gallery-grid collapsed" id="galleryGrid">
       <div class="gallery-item" data-cat="sprzet" data-index="0">
-        <img src="img/zdjecie3.png" alt="Żwirownia Skieblewo" loading="lazy">
+        <img src="img/gallery/zdjecie1.webp" alt="Żwirownia Skieblewo" loading="lazy">
         <div class="gallery-overlay">
           <div class="gallery-ov-icon">🔍</div>
         </div>
@@ -244,7 +433,7 @@
       </div>
 
       <div class="gallery-item" data-cat="sprzet" data-index="5">
-        <img src="img/gallery/zdjecie32.webp" alt="Wywrotka 3-osiowa" loading="lazy">
+        <img src="img/gallery/zdjecie41.webp" alt="Wywrotka 3-osiowa" loading="lazy">
         <div class="gallery-overlay">
           <div class="gallery-ov-icon">🔍</div>
         </div>
@@ -272,7 +461,7 @@
       </div>
 
       <div class="gallery-item" data-cat="sprzet" data-index="9">
-        <img src="img/gallery/zdjecie12.webp" alt="Droga gminna" loading="lazy">
+        <img src="img/gallery/zdjecie40.webp" alt="Droga gminna" loading="lazy">
         <div class="gallery-overlay">
           <div class="gallery-ov-icon">🔍</div>
         </div>
@@ -293,7 +482,7 @@
       </div>
 
       <div class="gallery-item" data-cat="kruszywo" data-index="12">
-        <img src="img/gallery/zdjecie15.webp" alt="Koparka kołowa" loading="lazy">
+        <img src="img/gallery/zdjecie42.webp" alt="Koparka kołowa" loading="lazy">
         <div class="gallery-overlay">
           <div class="gallery-ov-icon">🔍</div>
         </div>
@@ -396,13 +585,13 @@
           <div class="gallery-ov-icon">🔍</div>
         </div>
       </div>
-      <div class="gallery-item" data-cat="sprzet" data-index="26">
+      <div class="gallery-item" data-cat="sprzet" data-index="27">
         <img src="img/gallery/zdjecie35.webp" alt="Realizacja dla gminy" loading="lazy">
         <div class="gallery-overlay">
           <div class="gallery-ov-icon">🔍</div>
         </div>
       </div>
-      <div class="gallery-item" data-cat="sprzet" data-index="26">
+      <div class="gallery-item" data-cat="sprzet" data-index="28">
         <img src="img/gallery/zdjecie36.webp" alt="Realizacja dla gminy" loading="lazy">
         <div class="gallery-overlay">
           <div class="gallery-ov-icon">🔍</div>
@@ -449,7 +638,7 @@
         <p>Cena zależy od rodzaju usługi, ilości materiału, odległości dostawy i specyfiki terenu. Skontaktuj się z nami — wycenimy szybko i bez zobowiązań. Obsługujemy zarówno małe zlecenia prywatne, jak i duże kontrakty dla gmin.</p>
       </div>
       <div class="pricing-cta">
-        <a href="tel:784103957" class="btn btn-dark">📞 Zadzwoń po wycenę</a>
+        <a href="tel:784103957" class="btn btn-dark" style="-webkit-tap-highlight-color:transparent;"">📞 Zadzwoń po wycenę</a>
       </div>
     </div>
   </div>
@@ -563,7 +752,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <img src="logo2.png" alt="P.U.H. DROGMET Logo">
+      <img src="logo2.webp" alt="P.U.H. DROGMET Logo">
       <p>P.U.H. DROGMET — Tomasz Wnukowski<br>
       Żwirownia Skieblewo · ul. Złobikowskiego 3A, 16-315 Lipsk<br>
       NIP: 846-162-06-50 · Działamy od 2011 roku.</p>
@@ -590,13 +779,13 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2024 P.U.H. DROGMET Tomasz Wnukowski · Wszelkie prawa zastrzeżone</span>
+    <span>© 2026 P.U.H. DROGMET Tomasz Wnukowski · Firma działa od 2011 roku · Wszelkie prawa zastrzeżone</span>
     <span>NIP: 846-162-06-50</span>
   </div>
 </footer>
 
 <button id="scrollTop" onclick="smoothScrollTop()">↑</button>
 
-<script src="script.js?v=anchor-v2"></script>
+<script src="script.js?v=anchor-v2" defer></script>
 </body>
 </html>

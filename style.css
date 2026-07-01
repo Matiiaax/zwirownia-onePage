@@ -22,332 +22,20 @@ body { font-family:'Nunito', sans-serif; background:#fff; color:var(--dark); ove
 ::-webkit-scrollbar-track { background:#f1f1f1; }
 ::-webkit-scrollbar-thumb { background:var(--yellow); border-radius:3px; }
 
-/* -- NAV -- */
-nav {
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:1000;
-  background:rgba(16,16,16,0.76);
-  backdrop-filter:blur(16px);
-  -webkit-backdrop-filter:blur(16px);
-  border-bottom:1px solid rgba(255,255,255,0.10);
-  padding:0 40px;
-  height:80px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  box-shadow:0 14px 42px rgba(0,0,0,0.24);
-  transition:height 0.3s, background 0.3s, border-color 0.3s;
-}
-nav.scrolled {
-  height:63px;
-  background:rgba(18,18,18,0.95);
-  border-bottom:1px solid rgba(245,166,35,0.38);
-}
-
-.nav-logo {
-  display:flex;
-  align-items:center;
-  text-decoration:none;
-  padding:0;
-}
-
-.nav-logo img {
-  height:62px;
-  width:auto;
-  display:block;
-  object-fit:contain;
-  filter:
-    brightness(1.07)
-    contrast(1.18)
-    saturate(1.10)
-    drop-shadow(0 0 7px rgba(202, 147, 59, 0.429));
-}
-
-nav.scrolled .nav-logo img {
-  height:52px;
-}
-
-.nav-links {
-  display:flex;
-  gap:26px;
-  list-style:none;
-  align-items:center;
-}
-.nav-links a {
-  font-family:'Oswald', sans-serif;
-  font-size:0.78rem;
-  letter-spacing:1.15px;
-  text-transform:uppercase;
-  color:rgba(255,255,255,0.82);
-  text-decoration:none;
-  position:relative;
-  padding-bottom:7px;
-  transition:color 0.2s, transform 0.2s;
-}
-.nav-links a::after {
-  content:'';
-  position:absolute;
-  bottom:0;
-  left:0;
-  width:0;
-  height:2px;
-  background:var(--yellow);
-  transition:width 0.3s;
-}
-.nav-links a:hover {
-  color:#fff;
-  transform:translateY(-1px);
-}
-.nav-links a:hover::after { width:100%; }
-.nav-links a:first-child {
-  color:var(--yellow);
-}
-.nav-links a:first-child::after { width:100%; }
-
-.nav-cta {
-  background:rgba(0,0,0,0.16) !important;
-  color:#fff !important;
-  border:1.5px solid rgba(245,166,35,0.82) !important;
-  padding:9px 18px !important;
-  border-radius:7px;
-  font-weight:700 !important;
-  box-shadow:0 10px 24px rgba(0,0,0,0.16);
-  transition:background 0.3s, color 0.3s, transform 0.2s, border-color 0.3s !important;
-}
-.nav-cta:hover {
-  background:var(--yellow) !important;
-  border-color:var(--yellow) !important;
-  color:var(--dark) !important;
-  transform:translateY(-2px);
-}
-.nav-cta::after { display:none !important; }
+/* -- NAV --
+   UWAGA: pełne style nav/hamburger/mobile-menu/hero są już
+   wczytane INLINE w <head> index.html (critical CSS), żeby
+   pierwszy ekran renderował się bez czekania na ten plik.
+   Zostawiamy tu tylko deklaracje, które NIE są częścią
+   pierwszego ekranu (np. drobne hover-precyzje, jeśli jakieś
+   zostały), a usuwamy duplikaty żeby uniknąć dwukrotnego
+   parsowania tych samych reguł. */
 
 /* -- HAMBURGER -- */
-.hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:4px; }
-.hamburger span { display:block; width:26px; height:3px; background:#fff; border-radius:2px; transition:all 0.3s; }
-.hamburger.active span:nth-child(1) { transform:translateY(8px) rotate(45deg); }
-.hamburger.active span:nth-child(2) { opacity:0; }
-.hamburger.active span:nth-child(3) { transform:translateY(-8px) rotate(-45deg); }
-
-.mobile-menu {
-  display:none; position:fixed; top:72px; left:0; right:0;
-  background:rgba(18,18,18,0.98); z-index:999; padding:24px 24px 32px;
-  border-bottom:2px solid var(--yellow);
-  box-shadow:0 8px 24px rgba(0,0,0,0.24);
-  flex-direction:column; gap:16px;
-}
-.mobile-menu.open { display:flex; }
-.mobile-menu a {
-  font-family:'Oswald', sans-serif; font-size:0.9rem;
-  letter-spacing:0.9px; text-transform:uppercase;
-  color:#fff; text-decoration:none; padding:10px 0;
-  border-bottom:1px solid rgba(255,255,255,0.12);
-}
-.mobile-menu a:last-child {
-  border:none;
-  background:var(--yellow);
-  color:var(--dark);
-  text-align:center;
-  padding:12px;
-  font-weight:700;
-}
+/* (przeniesione do critical CSS w <head>) */
 
 /* -- HERO -- */
-#hero {
-  min-height:100vh;
-  background:url('img/zdjecie3.png') center/cover no-repeat;
-  display:flex; align-items:center;
-  padding:120px 40px 70px;
-  position:relative; overflow:hidden;
-  isolation:isolate;
-}
-#hero::before {
-  content:''; position:absolute; inset:0; z-index:0;
-  background:linear-gradient(
-    90deg,
-    rgba(30,30,30,0.90) 0%,
-    rgba(30,30,30,0.76) 42%,
-    rgba(30,30,30,0.50) 72%,
-    rgba(30,30,30,0.66) 100%
-  );
-}
-#hero::after {
-  content:''; position:absolute; inset:0; z-index:1; pointer-events:none;
-  background:
-    radial-gradient(ellipse at 22% 22%, rgba(245,166,35,0.20), transparent 34%),
-    linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.58));
-}
-.hero-pattern {
-  position:absolute; inset:0; pointer-events:none; z-index:2; opacity:0.32;
-  background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 44px, rgba(255,255,255,0.035) 44px, rgba(255,255,255,0.035) 45px),
-    repeating-linear-gradient(90deg, transparent, transparent 44px, rgba(245,166,35,0.055) 44px, rgba(245,166,35,0.055) 45px);
-}
-.hero-corner {
-  position:absolute; bottom:-160px; right:-120px;
-  width:560px; height:560px; z-index:2; pointer-events:none;
-  background:radial-gradient(ellipse at bottom right, rgba(245,166,35,0.24) 0%, transparent 68%);
-}
-.hero-inner {
-  max-width:1200px; margin:0 auto; width:100%;
-  display:grid; grid-template-columns:1.08fr 0.92fr; gap:54px; align-items:center;
-  position:relative; z-index:3;
-}
-.hero-content { max-width:680px; }
-.hero-badge {
-  display:inline-flex; align-items:center; gap:8px;
-  background:rgba(245,166,35,0.14);
-  border:1px solid rgba(245,166,35,0.55);
-  padding:7px 14px; border-radius:100px;
-  font-size:0.69rem; letter-spacing:1.55px; text-transform:uppercase;
-  color:var(--yellow-light); font-weight:800; margin-bottom:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.22);
-  animation:fadeUp 0.7s ease both;
-}
-.hero-badge::before {
-  content:''; width:7px; height:7px;
-  background:var(--yellow); border-radius:50%;
-  box-shadow:0 0 0 5px rgba(245,166,35,0.18);
-  animation:blink 1.5s ease infinite;
-}
-@keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.6)} }
-.hero-title {
-  font-family:'Oswald', sans-serif;
-  font-size:clamp(2.22rem, 5.1vw, 4.55rem);
-  font-weight:700; line-height:0.98; color:#fff;
-  margin-bottom:16px;
-  animation:fadeUp 0.7s 0.1s ease both;
-  display:flex; flex-direction:column; gap:6px;
-  text-shadow:0 8px 28px rgba(0,0,0,0.55);
-}
-.hero-title .line-small {
-  font-family:'Nunito', sans-serif;
-  font-size:0.205em; letter-spacing:0.85px; text-transform:none;
-  color:rgba(255,255,255,0.92); font-weight:800; margin-bottom:4px;
-}
-.hero-title .accent { color:var(--yellow); display:block; }
-.hero-title .line2 {
-  display:block; font-family:'Nunito', sans-serif;
-  font-size:0.275em; color:#fff; font-weight:800;
-  letter-spacing:0.5px; text-transform:none; margin-top:20px;
-}
-.hero-sub {
-  max-width:570px;
-  font-size:0.96rem; color:rgba(255,255,255,0.82);
-  line-height:1.7; margin-bottom:18px;
-  font-weight:400; animation:fadeUp 0.7s 0.2s ease both;
-}
-.hero-sub strong { color:#fff; font-weight:800; }
-.hero-years {
-  margin-top: 15px;
-  display:inline-flex; align-items:center; gap:13px;
-  background:rgba(245,166,35,0.96); padding:10px 19px;
-  margin-bottom:22px; border-radius:8px;
-  box-shadow:0 16px 36px rgba(0,0,0,0.28);
-  animation:fadeUp 0.7s 0.25s ease both;
-}
-.hero-years .num {
-  font-family:'Oswald', sans-serif; font-size:2.5rem; font-weight:700;
-  color:var(--dark); line-height:1;
-}
-.hero-years .txt {
-  font-size:0.77rem; text-transform:uppercase; font-weight:900;
-  color:var(--dark); line-height:1.18; letter-spacing:0.8px;
-}
-.hero-btns {
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-  animation:fadeUp 0.7s 0.3s ease both;
-}
-.hero-btns .btn {
-  min-height:49px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding:13px 24px;
-  border-radius:8px;
-  font-family:'Nunito', sans-serif;
-  font-size:0.9rem;
-  font-weight:900;
-  letter-spacing:0.2px;
-  text-transform:none;
-  text-decoration:none;
-  border:2px solid transparent;
-  transition:transform 0.25s, box-shadow 0.25s, background 0.25s, border-color 0.25s, color 0.25s;
-}
-.hero-btns .btn-primary {
-  background:var(--yellow);
-  color:var(--dark);
-  border-color:var(--yellow);
-  box-shadow:0 12px 28px rgba(245,166,35,0.28);
-}
-.hero-btns .btn-primary::before {
-  content:'➤';
-  font-size:0.86rem;
-  line-height:1;
-}
-.hero-btns .btn-primary:hover {
-  background:var(--yellow-dark);
-  border-color:var(--yellow-dark);
-  transform:translateY(-2px);
-  box-shadow:0 16px 34px rgba(245,166,35,0.38);
-}
-.hero-btns .btn-outline {
-  background:rgba(0,0,0,0.22);
-  color:#fff;
-  border-color:rgba(245,166,35,0.88);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
-}
-.hero-btns .btn-outline::before {
-  content:'☎';
-  color:var(--yellow);
-  font-size:0.95rem;
-  line-height:1;
-}
-.hero-btns .btn-outline:hover {
-  background:rgba(245,166,35,0.12);
-  border-color:var(--yellow);
-  color:#fff;
-  transform:translateY(-2px);
-  box-shadow:0 14px 32px rgba(0,0,0,0.18);
-}
-.hero-visual {
-  position:relative; display:flex; align-items:center; justify-content:center;
-  animation:fadeUp 0.7s 0.4s ease both;
-}
-.hero-visual > div { width:100%; max-width:520px; margin-left:auto; }
-.hero-img-wrap,
-.hero-logo-card {
-  background:rgba(255,255,255,0.92);
-  border:1px solid rgba(245,166,35,0.45);
-  padding:28px; border-radius:16px;
-  box-shadow:0 24px 70px rgba(0,0,0,0.28);
-  backdrop-filter:blur(14px);
-  animation:float 4s ease-in-out infinite;
-}
-@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-.hero-img-wrap img,
-.hero-logo-card img { max-width:100%; height:auto; display:block; max-height:210px; object-fit:contain; }
-.hero-stats {
-  display:grid; grid-template-columns:1fr 1fr; gap:14px;
-  margin-top:0;
-}
-.stat-pill {
-  background:rgba(30,30,30,0.58);
-  border:1px solid rgba(255,255,255,0.16);
-  padding:18px 19px; border-radius:13px;
-  border-left:4px solid var(--yellow);
-  box-shadow:0 12px 32px rgba(0,0,0,0.18);
-  backdrop-filter:blur(12px);
-}
-.stat-pill .sv { font-family:'Oswald', sans-serif; font-size:1.55rem; color:#fff; font-weight:700; }
-.stat-pill .sl { font-size:0.68rem; text-transform:uppercase; letter-spacing:1px; color:rgba(255,255,255,0.68); margin-top:2px; }
+/* (przeniesione do critical CSS w <head>) */
 
 /* diagonal cut */
 .section-cut { height:60px; background:var(--light-gray); clip-path:polygon(0 0,100% 100%,100% 100%,0 100%); margin-top:-1px; }
@@ -506,6 +194,9 @@ nav.scrolled .nav-logo img {
   display:flex; align-items:center; justify-content:space-between;
   gap:34px; flex-wrap:wrap; margin-top:35px;
   box-shadow:0 20px 60px rgba(245,166,35,0.3);
+  -webkit-tap-highlight-color: transparent !important;
+  -webkit-touch-callout: none !important;
+  user-select: none !important;
 }
 .pricing-txt h3 { font-family:'Oswald', sans-serif; font-size:1.72rem; font-weight:700; color:var(--dark); margin-bottom:10px; }
 .pricing-txt p { font-size:0.94rem; color:rgba(30,30,30,0.7); line-height:1.6; max-width:480px; }
@@ -608,7 +299,7 @@ footer {
   transition:opacity 0.3s, transform 0.3s, background 0.2s;
   box-shadow:0 4px 16px rgba(245,166,35,0.4);
 }
-#scrollTop.show { opacity:1; transform:translateY(0); }
+#scrollTop.show { opacity:1; transform:translateY(0); pointer-events:all; }
 #scrollTop:hover { background:var(--yellow-dark); }
 
 /* -- ANIMATIONS -- */
@@ -632,43 +323,21 @@ footer {
 
 /* -- MOBILE -- */
 @media (max-width:960px) {
-  nav { padding:0 20px; }
-  .nav-links { display:none; }
-  .hamburger { display:flex; }
-  .hero-inner { grid-template-columns:1fr; }
-  .hero-visual { display:none; }
   .map-wrap { grid-template-columns:1fr; }
   .map-svg-container { display:none; }
   .contact-grid { grid-template-columns:1fr; }
   .footer-inner { grid-template-columns:1fr; }
   .section { padding:52px 20px; }
-  #hero { padding:90px 20px 50px; }
   .pricing-box { padding:32px 26px; }
   .form-row { grid-template-columns:1fr; }
   .contact-form { padding:26px 20px; }
 }
 @media (max-width:640px) {
-  .hero-stats { grid-template-columns:1fr 1fr; }
   .services-grid { grid-template-columns:1fr; }
   .machines-grid { grid-template-columns:1fr 1fr; }
 }
 @media (max-width:400px) {
   .machines-grid { grid-template-columns:1fr; }
-}
-
-/* -- HERO MOBILE OVERRIDE -- */
-@media (max-width:960px) {
-  #hero { min-height:auto; padding:105px 20px 56px; }
-  .hero-inner { grid-template-columns:1fr; gap:26px; }
-  .hero-content { max-width:100%; }
-  .hero-visual { display:block; }
-  .hero-stats { margin-top:0; }
-}
-@media (max-width:640px) {
-  .hero-title { font-size:clamp(2.05rem, 10.5vw, 3.2rem); }
-  .hero-sub { font-size:0.9rem; line-height:1.62; }
-  .hero-stats { grid-template-columns:1fr; }
-  .hero-years { margin-bottom:22px; }
 }
 
 /* -- POPRAWKA: BUTTON W CENNIKU / CENACH INDYWIDUALNYCH -- */
@@ -742,109 +411,6 @@ footer {
 
 .pricing-box .btn-dark:hover::after {
   transform:translateX(4px);
-}
-
-/* -- POPRAWKA: HOVERY NAVBAR -- */
-.nav-links a {
-  padding:10px 2px 9px;
-  border-radius:6px;
-  z-index:1;
-}
-
-.nav-links a::before {
-  content:'';
-  position:absolute;
-  left:50%;
-  bottom:0;
-  width:0;
-  height:100%;
-  background:rgba(245,166,35,0.08);
-  border-radius:6px;
-  transform:translateX(-50%);
-  z-index:-1;
-  transition:width 0.25s ease, background 0.25s ease;
-}
-
-.nav-links a:hover {
-  color:var(--yellow);
-  transform:translateY(-2px);
-}
-
-.nav-links a:hover::before {
-  width:calc(100% + 18px);
-}
-
-.nav-links a:hover::after {
-  width:100%;
-}
-
-/* Uslugi nie sa na stale podswietlone - podswietlaja sie dopiero po hoverze */
-.nav-links a:first-child {
-  color:rgba(255,255,255,0.82);
-}
-
-.nav-links a:first-child::after {
-  width:0;
-}
-
-.nav-links a:first-child:hover {
-  color:var(--yellow);
-}
-
-.nav-links a:first-child:hover::after {
-  width:100%;
-}
-
-/* Kontakt jako mocniejszy button w navbarze */
-.nav-cta {
-  position:relative;
-  overflow:hidden;
-  background:rgba(245,166,35,0.04) !important;
-  border:1.5px solid rgba(245,166,35,0.9) !important;
-  color:#fff !important;
-  box-shadow:none;
-}
-
-.nav-cta::before {
-  content:'';
-  position:absolute;
-  inset:0;
-  background:var(--yellow);
-  transform:scaleX(0);
-  transform-origin:left;
-  transition:transform 0.25s ease;
-  z-index:-1;
-}
-
-.nav-cta:hover {
-  color:var(--dark) !important;
-  border-color:var(--yellow) !important;
-  transform:translateY(-2px);
-  box-shadow:0 10px 24px rgba(245,166,35,0.22);
-}
-
-.nav-cta:hover::before {
-  transform:scaleX(1);
-}
-
-.nav-cta:hover::after {
-  display:none !important;
-}
-
-/* Mobile menu - spojny hover/tap */
-.mobile-menu a {
-  transition:background 0.25s ease, color 0.25s ease, padding-left 0.25s ease;
-}
-
-.mobile-menu a:hover {
-  color:var(--yellow);
-  padding-left:8px;
-}
-
-.mobile-menu a:last-child:hover {
-  background:var(--yellow-dark);
-  color:var(--dark);
-  padding-left:12px;
 }
 
 .route-btn {
@@ -985,8 +551,7 @@ footer {
 }
 
 /* ================================================================
-   GALERIA — ZAKTUALIZOWANY CSS (zastąp poprzedni blok galerii w style.css)
-   Znajdź w style.css komentarz "GALERIA" i zastąp wszystko aż do końca pliku
+   GALERIA — ZAKTUALIZOWANY CSS
 ================================================================ */
 
 /* -- FILTRY -- */
@@ -1051,9 +616,8 @@ footer {
 }
 
 .gallery-item img {
-  width: 800px;
-  height: 600px;
-  max-width: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
@@ -1328,151 +892,16 @@ footer {
   .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
   .gallery-grid.collapsed .gallery-item:nth-child(n+5) { display: none; }
 }
+
 /* ================================================================
    RESPONSIVE IMPROVEMENTS v2
-   Dodaj na SAMYM KOŃCU pliku style.css — nadpisuje poprzednie media queries
 ================================================================ */
 
-
-/* ══════════════════════════════════════════════════════════
-   1. MOBILE MENU — PŁYNNA ANIMACJA (całkowity override)
-══════════════════════════════════════════════════════════ */
-
-.mobile-menu {
-  display: flex;               /* zawsze display:flex, widoczność przez max-height */
-  flex-direction: column;
-  gap: 0;
-  position: fixed;
-  top: 80px;
-  left: 0;
-  right: 0;
-  z-index: 999;
-  padding: 0 24px;
-  background: rgba(13,13,13,0.97);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 2px solid transparent;
-
-  /* Domyślnie SCHOWANE */
-  max-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-8px);
-
-  transition:
-    max-height  0.42s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity     0.30s ease,
-    transform   0.30s ease,
-    border-color 0.32s ease,
-    box-shadow  0.32s ease;
-}
-
-/* Gdy nav jest scrolled — menu przesuwa się wyżej */
-nav.scrolled + .mobile-menu {
-  top: 63px;
-}
-
-/* Otwarte menu */
-.mobile-menu.open {
-  max-height: 500px;
-  opacity: 1;
-  pointer-events: all;
-  transform: translateY(0);
-  border-color: var(--yellow);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
-  padding: 16px 24px 28px;
-}
-
-/* Linki w menu — wchodzą z lewa (staggered) */
-.mobile-menu a {
-  opacity: 0;
-  transform: translateX(-12px);
-  transition:
-    opacity    0.28s ease,
-    transform  0.28s ease,
-    color      0.2s,
-    padding-left 0.2s,
-    background 0.2s;
-  padding: 12px 4px;
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.88rem;
-  letter-spacing: 0.9px;
-  text-transform: uppercase;
-  color: #fff;
-  text-decoration: none;
-}
-
-.mobile-menu a:last-child {
-  border: none;
-  background: var(--yellow);
-  color: var(--dark);
-  text-align: center;
-  padding: 12px;
-  font-weight: 700;
-  border-radius: 6px;
-  margin-top: 4px;
-  opacity: 0;
-  transform: translateX(-12px);
-}
-
-/* Kaskadowe pojawianie się linków */
-.mobile-menu.open a          { opacity: 1; transform: translateX(0); }
-.mobile-menu.open a:nth-child(1) { transition-delay: 0.06s; }
-.mobile-menu.open a:nth-child(2) { transition-delay: 0.11s; }
-.mobile-menu.open a:nth-child(3) { transition-delay: 0.16s; }
-.mobile-menu.open a:nth-child(4) { transition-delay: 0.21s; }
-.mobile-menu.open a:nth-child(5) { transition-delay: 0.26s; }
-
-.mobile-menu a:hover       { color: var(--yellow); padding-left: 8px; }
-.mobile-menu a:last-child:hover { background: var(--yellow-dark); color: var(--dark); padding-left: 12px; }
-
-/* Na desktopie całkowicie wyłączone */
-@media (min-width: 961px) {
-  .mobile-menu { display: none !important; }
-}
-
-
-/* ══════════════════════════════════════════════════════════
-   2. TABLET DUŻY / LANDSCAPE TELEFON (≤ 960px)
-══════════════════════════════════════════════════════════ */
-
-@media (max-width: 960px) {
-
-  /* Nav */
-  nav { padding: 0 18px; height: 68px; }
-  .nav-logo img { height: 54px; }
-  nav.scrolled { height: 58px; }
-  nav.scrolled .nav-logo img { height: 46px; }
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
-
-  /* Hero */
-  #hero { min-height: auto; padding: 96px 18px 50px; }
-  .hero-inner { grid-template-columns: 1fr; gap: 22px; }
-  .hero-content { max-width: 100%; }
-  .hero-visual { display: block; }
-  .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 0; }
-
-  /* ★ Żwirownia Skieblewo · Lipsk — WYRAŹNY na tablecie */
-  .hero-title .line-small {
-    font-size: clamp(0.85rem, 2.8vw, 1.05rem) !important;
-    letter-spacing: 0.7px;
-    margin-bottom: 10px;
-    color: rgba(255,255,255,0.95) !important;
-  }
-
-  .stat-pill { padding: 14px 16px; }
-  .stat-pill .sv { font-size: 1.35rem; }
-
+@media (max-width:960px) {
   /* Sekcje */
-  .section { padding: 52px 20px; }
-
-  /* Obszar (override inline style) */
   #obszar { padding: 56px 20px !important; }
 
-  /* ★ Mapa — WIDOCZNA na tablecie */
+  /* Mapa — widoczna na tablecie */
   .map-wrap { grid-template-columns: 1fr; gap: 24px; }
   .map-svg-container { display: block !important; min-height: auto !important; border-radius: 12px; }
   #serviceMap { height: 320px !important; }
@@ -1486,40 +915,7 @@ nav.scrolled + .mobile-menu {
   .contact-form { padding: 24px 18px; }
 }
 
-
-/* ══════════════════════════════════════════════════════════
-   3. TABLET MAŁY / DUŻY TELEFON (≤ 768px)
-══════════════════════════════════════════════════════════ */
-
 @media (max-width: 768px) {
-
-  /* Nav */
-  nav { height: 62px; padding: 0 16px; }
-  .nav-logo img { height: 48px; }
-  nav.scrolled { height: 54px; }
-  nav.scrolled .nav-logo img { height: 42px; }
-
-  /* Hero */
-  #hero { padding: 88px 16px 44px; }
-  .hero-title { font-size: clamp(1.9rem, 8.5vw, 2.9rem); gap: 4px; }
-
-  /* ★ Żwirownia Skieblewo · Lipsk */
-  .hero-title .line-small {
-    font-size: clamp(0.83rem, 3.8vw, 1rem) !important;
-    margin-bottom: 8px;
-  }
-
-  .hero-title .line2 { font-size: 0.28em; margin-top: 14px; }
-  .hero-sub { font-size: 0.88rem; line-height: 1.64; margin-bottom: 14px; }
-
-  .hero-years { padding: 9px 14px; gap: 10px; margin-bottom: 18px; }
-  .hero-years .num { font-size: 2rem; }
-  .hero-years .txt { font-size: 0.72rem; }
-
-  .stat-pill { padding: 12px 14px; border-radius: 10px; }
-  .stat-pill .sv { font-size: 1.2rem; }
-  .stat-pill .sl { font-size: 0.63rem; }
-
   /* Sekcje */
   .section { padding: 44px 16px; }
   .section-title { font-size: clamp(1.4rem, 5.5vw, 2rem); }
@@ -1557,45 +953,7 @@ nav.scrolled + .mobile-menu {
   .footer-brand p { font-size: 0.78rem; }
 }
 
-
-/* ══════════════════════════════════════════════════════════
-   4. STANDARDOWE TELEFONY (≤ 600px)
-══════════════════════════════════════════════════════════ */
-
 @media (max-width: 600px) {
-
-  /* Nav */
-  nav { height: 58px; padding: 0 14px; }
-  .nav-logo img { height: 44px; }
-  nav.scrolled { height: 52px; }
-
-  /* Hero */
-  #hero { padding: 80px 14px 40px; }
-  .hero-title { font-size: clamp(1.75rem, 9.5vw, 2.5rem); gap: 3px; }
-
-  /* ★ Żwirownia Skieblewo · Lipsk — dobrze widoczne */
-  .hero-title .line-small {
-    font-size: clamp(0.8rem, 4.2vw, 0.96rem) !important;
-    letter-spacing: 0.4px;
-    color: rgba(255,255,255,0.96) !important;
-  }
-
-  .hero-title .line2 { margin-top: 12px; }
-  .hero-sub { font-size: 0.84rem; margin-bottom: 12px; }
-
-  /* Przyciski hero — pełna szerokość */
-  .hero-btns { flex-direction: column; gap: 10px; }
-  .hero-btns .btn { width: 100%; justify-content: center; min-height: 46px; font-size: 0.86rem; padding: 11px 18px; }
-
-  .hero-years { padding: 8px 13px; gap: 10px; margin-bottom: 16px; }
-  .hero-years .num { font-size: 1.75rem; }
-  .hero-years .txt { font-size: 0.66rem; }
-
-  .hero-stats { gap: 8px; }
-  .stat-pill { padding: 11px 12px; border-radius: 9px; border-left-width: 3px; }
-  .stat-pill .sv { font-size: 1.1rem; }
-  .stat-pill .sl { font-size: 0.61rem; }
-
   /* Sekcje */
   .section { padding: 38px 14px; }
   .section-title { font-size: clamp(1.3rem, 6vw, 1.8rem); margin-bottom: 10px; }
@@ -1659,29 +1017,7 @@ nav.scrolled + .mobile-menu {
   .map-embed iframe { height: 190px; }
 }
 
-
-/* ══════════════════════════════════════════════════════════
-   5. MAŁE TELEFONY (≤ 420px)
-══════════════════════════════════════════════════════════ */
-
 @media (max-width: 420px) {
-
-  nav { padding: 0 12px; height: 56px; }
-  .nav-logo img { height: 40px; }
-
-  #hero { padding: 74px 12px 36px; }
-  .hero-title { font-size: clamp(1.6rem, 10vw, 2.2rem); }
-
-  /* ★ Żwirownia Skieblewo · Lipsk */
-  .hero-title .line-small {
-    font-size: clamp(0.76rem, 4.5vw, 0.9rem) !important;
-  }
-
-  .hero-sub { font-size: 0.82rem; }
-  .stat-pill { padding: 10px 11px; }
-  .stat-pill .sv { font-size: 1rem; }
-  .stat-pill .sl { font-size: 0.59rem; }
-
   .section { padding: 32px 12px; }
   #obszar { padding: 32px 12px !important; }
   #serviceMap { height: 230px !important; }
@@ -1691,31 +1027,10 @@ nav.scrolled + .mobile-menu {
 
   .gallery-grid { gap: 5px; }
 
-  .mobile-menu.open { padding: 14px 16px 22px; }
-
   .machines-grid { grid-template-columns: 1fr; }
 }
 
-
-/* ══════════════════════════════════════════════════════════
-   6. BARDZO MAŁE TELEFONY (≤ 360px)
-══════════════════════════════════════════════════════════ */
-
 @media (max-width: 360px) {
-
-  nav { padding: 0 10px; height: 54px; }
-  .nav-logo img { height: 36px; }
-  .hamburger span { width: 22px; }
-
-  #hero { padding: 68px 10px 32px; }
-  .hero-title { font-size: clamp(1.45rem, 11vw, 1.95rem); gap: 2px; }
-
-  .hero-title .line-small {
-    font-size: 0.77rem !important;
-  }
-
-  .hero-btns .btn { font-size: 0.8rem; padding: 10px 14px; min-height: 43px; }
-
   .section { padding: 26px 10px; }
   #obszar { padding: 26px 10px !important; }
   #serviceMap { height: 210px !important; }
@@ -1727,14 +1042,11 @@ nav.scrolled + .mobile-menu {
   .gf-btn { font-size: 0.63rem; padding: 5px 9px; }
 
   .footer-bottom { font-size: 0.64rem; }
-
-  .mobile-menu.open { padding: 12px 14px 20px; }
 }
 
-
-/* ══════════════════════════════════════════════════════════
-   7. LIGHTBOX — korekty mobilne
-══════════════════════════════════════════════════════════ */
+/* ================================================================
+   LIGHTBOX — korekty mobilne
+================================================================ */
 
 @media (max-width: 600px) {
   .lb-img { max-width: 96vw; max-height: 75vh; border-radius: 8px; }
@@ -1748,55 +1060,11 @@ nav.scrolled + .mobile-menu {
 
 /* ================================================================
    POPRAWKI 2026-05-29 — MOBILE/TABLET
-   - brak szpary między navbarem i hamburger menu
-   - mniejsze elementy na telefonach/tabletach
-   - bez przycisków hero na pierwszej stronie mobile/tablet
-   - lista miast w obszarze nie jest klikalna
+   - listy miast w obszarze nie są klikalne
    - mniejszy przycisk wyznaczania trasy na mobile/tablet
 ================================================================ */
 
-/* menu ma zaczynać się dokładnie pod aktualną wysokością navbara */
-.mobile-menu {
-  transition:
-    top 0.30s ease,
-    max-height 0.42s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.30s ease,
-    transform 0.30s ease,
-    border-color 0.32s ease,
-    box-shadow 0.32s ease !important;
-}
-
 @media (max-width: 960px) {
-  /* hamburger menu bez przerwy pod navbarem */
-  .mobile-menu { top: 68px !important; }
-  nav.scrolled + .mobile-menu { top: 58px !important; }
-
-  /* pierwsza sekcja: usunięte CTA i telefon na mobile/tablet */
-  .hero-btns { display: none !important; }
-
-  /* ogólne zmniejszenie elementów na tabletach i telefonach */
-  #hero { padding-top: 86px !important; padding-bottom: 34px !important; }
-  .hero-title { font-size: clamp(1.75rem, 6.4vw, 2.65rem) !important; line-height: 1.02 !important; }
-  .hero-title .line-small { font-size: clamp(0.74rem, 2.7vw, 0.95rem) !important; margin-bottom: 6px !important; }
-  .hero-title .line2 { margin-top: 10px !important; }
-  .hero-sub { font-size: 0.82rem !important; line-height: 1.56 !important; margin-bottom: 12px !important; max-width: 620px; }
-  .hero-years { padding: 7px 12px !important; gap: 9px !important; margin-bottom: 0 !important; }
-  .hero-years .num { font-size: 1.65rem !important; }
-  .hero-years .txt { font-size: 0.62rem !important; }
-  .hero-stats { gap: 8px !important; }
-  .stat-pill { padding: 10px 12px !important; border-radius: 9px !important; }
-  .stat-pill .sv { font-size: 1rem !important; }
-  .stat-pill .sl { font-size: 0.58rem !important; }
-
-  .section { padding-top: 38px !important; padding-bottom: 38px !important; }
-  #obszar { padding-top: 38px !important; padding-bottom: 38px !important; }
-  .services-grid { gap: 12px !important; margin-top: 24px !important; }
-  .service-card { padding: 18px 16px !important; }
-  .svc-icon { width: 44px !important; height: 44px !important; font-size: 1.1rem !important; margin-bottom: 12px !important; }
-  .svc-num { font-size: 2.25rem !important; }
-  .svc-title { font-size: 0.92rem !important; }
-  .svc-desc { font-size: 0.78rem !important; line-height: 1.55 !important; }
-
   /* lista miast ma być tylko informacją, bez klikalności/tap efektu */
   .cities-list,
   .city-item,
@@ -1814,113 +1082,53 @@ nav.scrolled + .mobile-menu {
 
   /* mniejszy przycisk trasy na mobile/tablet */
   .route-btn {
-    width: fit-content !important;
-    max-width: 100% !important;
-    min-height: 40px !important;
-    margin: 10px auto 0 !important;
-    padding: 8px 14px !important;
-    border-radius: 8px !important;
-    gap: 6px !important;
-    font-size: 0.72rem !important;
-    line-height: 1.1 !important;
-    letter-spacing: 0.75px !important;
-    box-shadow: 0 7px 16px rgba(245,166,35,0.23), inset 0 1px 0 rgba(255,255,255,0.32) !important;
+    width:fit-content !important;
+    max-width:100% !important;
+    min-height:40px !important;
+    margin:10px auto 0 !important;
+    padding:8px 14px !important;
+    border-radius:8px !important;
+    gap:6px !important;
+    font-size:0.72rem !important;
+    line-height:1.1 !important;
+    letter-spacing:0.75px !important;
+    box-shadow:0 7px 16px rgba(245,166,35,0.23), inset 0 1px 0 rgba(255,255,255,0.32) !important;
   }
 }
 
 @media (max-width: 768px) {
-  .mobile-menu { top: 62px !important; }
-  nav.scrolled + .mobile-menu { top: 54px !important; }
-
-  #hero { padding-top: 78px !important; padding-bottom: 30px !important; }
-  .hero-title { font-size: clamp(1.55rem, 7.5vw, 2.25rem) !important; }
-  .hero-title .line-small { font-size: clamp(0.72rem, 3.5vw, 0.88rem) !important; }
-  .hero-sub { font-size: 0.78rem !important; }
-  .hero-years .num { font-size: 1.45rem !important; }
-  .hero-years .txt { font-size: 0.58rem !important; }
-  .stat-pill { padding: 9px 10px !important; }
-  .stat-pill .sv { font-size: 0.92rem !important; }
-  .stat-pill .sl { font-size: 0.54rem !important; }
-
-  #serviceMap { height: 240px !important; }
-  .city-item { padding: 10px 12px !important; }
-  .city-name { font-size: 0.8rem !important; }
-  .city-dist { font-size: 0.72rem !important; }
+  .route-btn { min-height:46px !important; }
 }
 
 @media (max-width: 600px) {
-  .mobile-menu { top: 58px !important; }
-  nav.scrolled + .mobile-menu { top: 52px !important; }
-
-  #hero { padding-top: 72px !important; padding-bottom: 28px !important; }
-  .hero-title { font-size: clamp(1.42rem, 8.5vw, 2.05rem) !important; }
-  .hero-sub { font-size: 0.76rem !important; }
-  .hero-stats { grid-template-columns: 1fr 1fr !important; }
-  .stat-pill { padding: 8px 9px !important; }
-
   .route-btn {
-    min-height: 36px !important;
-    padding: 7px 11px !important;
-    font-size: 0.66rem !important;
-    letter-spacing: 0.55px !important;
-    border-radius: 7px !important;
+    min-height:36px !important;
+    padding:7px 11px !important;
+    font-size:0.66rem !important;
+    letter-spacing:0.55px !important;
+    border-radius:7px !important;
   }
 }
 
 @media (max-width: 420px) {
-  .mobile-menu { top: 56px !important; }
-  nav.scrolled + .mobile-menu { top: 52px !important; }
-
-  .hero-stats { grid-template-columns: 1fr !important; }
-  .route-btn { font-size: 0.63rem !important; padding: 7px 10px !important; }
-}
-
-@media (max-width: 360px) {
-  .mobile-menu { top: 54px !important; }
-  nav.scrolled + .mobile-menu { top: 52px !important; }
+  .route-btn { font-size:0.63rem !important; padding:7px 10px !important; }
 }
 
 /* ================================================================
    POPRAWKI 2026-05-29 v2
-   - karty statystyk w hero nie rozciągają się na pełną szerokość
+   - karty statystyk w hero (tylko desktop, mobile/tablet je chowa)
    - większy przycisk trasy na mobile/tablet
    - trochę mniejsza karta indywidualnej wyceny
 ================================================================ */
 
-/* HERO: statystyki jako zwarte kafelki, nie pełna szerokość */
 @media (max-width: 960px) {
-  .hero-visual {
-    justify-content: flex-start !important;
-  }
-
-  .hero-visual > div {
-    width: auto !important;
-    max-width: 390px !important;
-    margin-left: 0 !important;
-    margin-right: auto !important;
-  }
-
-  .hero-stats {
-    display: inline-grid !important;
-    grid-template-columns: repeat(2, minmax(132px, 176px)) !important;
-    width: auto !important;
-    max-width: 100% !important;
-    justify-content: flex-start !important;
-  }
-
-  .stat-pill {
-    width: auto !important;
-    min-width: 0 !important;
-  }
-
-  /* Przycisk trasy: większy niż w poprzedniej wersji, ale nadal mobilny */
   .route-btn {
-    min-height: 46px !important;
-    padding: 11px 18px !important;
-    font-size: 0.82rem !important;
-    letter-spacing: 0.8px !important;
-    border-radius: 9px !important;
-    gap: 8px !important;
+    min-height:46px !important;
+    padding:11px 18px !important;
+    font-size:0.82rem !important;
+    letter-spacing:0.8px !important;
+    border-radius:9px !important;
+    gap:8px !important;
     box-shadow:
       0 10px 24px rgba(245,166,35,0.28),
       inset 0 1px 0 rgba(255,255,255,0.35) !important;
@@ -1928,39 +1136,16 @@ nav.scrolled + .mobile-menu {
 }
 
 @media (max-width: 600px) {
-  .hero-visual > div {
-    max-width: 330px !important;
-  }
-
-  .hero-stats {
-    grid-template-columns: repeat(2, minmax(122px, 154px)) !important;
-    gap: 8px !important;
-  }
-
   .route-btn {
-    min-height: 44px !important;
-    padding: 10px 16px !important;
-    font-size: 0.78rem !important;
-    letter-spacing: 0.65px !important;
+    min-height:44px !important;
+    padding:10px 16px !important;
+    font-size:0.78rem !important;
+    letter-spacing:0.65px !important;
   }
 }
 
 @media (max-width: 420px) {
-  .hero-stats {
-    grid-template-columns: repeat(2, minmax(112px, 145px)) !important;
-  }
-
-  .route-btn {
-    font-size: 0.74rem !important;
-    padding: 10px 14px !important;
-  }
-}
-
-@media (max-width: 340px) {
-  .hero-stats {
-    grid-template-columns: 1fr !important;
-    width: min(220px, 100%) !important;
-  }
+  .route-btn { font-size:0.74rem !important; padding:10px 14px !important; }
 }
 
 /* CENNIK: karta z indywidualną wyceną trochę mniejsza */
@@ -2019,177 +1204,6 @@ nav.scrolled + .mobile-menu {
 }
 
 /* ================================================================
-   POPRAWKI 2026-05-29 v3
-   - karty statystyk w hero jedna pod druga
-   - wiekszy odstep i ladniejszy wyglad napisu Zwirownia Skieblewo Lipsk
-================================================================ */
-
-/* HERO: wiecej oddechu pod navbarem */
-#hero {
-  padding-top: 142px !important;
-}
-
-.hero-inner {
-  align-items: center !important;
-}
-
-.hero-title {
-  gap: 8px !important;
-}
-
-/* Napis nad tytulem jako subtelna etykieta zamiast przyklejonego tekstu */
-.hero-title .line-small {
-  display: inline-flex !important;
-  align-self: flex-start !important;
-  width: auto !important;
-  max-width: 100% !important;
-  padding: 7px 12px !important;
-  margin-bottom: 14px !important;
-  border: 1px solid rgba(245,166,35,0.42) !important;
-  border-radius: 999px !important;
-  background: rgba(0,0,0,0.22) !important;
-  color: rgba(255,255,255,0.94) !important;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.18) !important;
-  line-height: 1.1 !important;
-}
-
-/* Karty: zawsze jedna pod druga, zwarte i estetyczne */
-.hero-visual {
-  justify-content: center !important;
-}
-
-.hero-visual > div {
-  width: min(300px, 100%) !important;
-  max-width: 300px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-
-.hero-stats {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  width: 100% !important;
-  max-width: 300px !important;
-  gap: 10px !important;
-}
-
-.stat-pill {
-  width: 100% !important;
-  padding: 13px 15px !important;
-}
-
-.stat-pill .sv {
-  font-size: 1.18rem !important;
-}
-
-.stat-pill .sl {
-  font-size: 0.62rem !important;
-  line-height: 1.25 !important;
-}
-
-@media (max-width: 960px) {
-  #hero {
-    padding-top: 108px !important;
-    padding-bottom: 38px !important;
-  }
-
-  .hero-inner {
-    gap: 24px !important;
-  }
-
-  .hero-title {
-    gap: 6px !important;
-    margin-bottom: 14px !important;
-  }
-
-  .hero-title .line-small {
-    margin-bottom: 12px !important;
-    padding: 7px 11px !important;
-  }
-
-  .hero-visual {
-    justify-content: flex-start !important;
-  }
-
-  .hero-visual > div,
-  .hero-stats {
-    width: min(280px, 100%) !important;
-    max-width: 280px !important;
-    margin-left: 0 !important;
-    margin-right: auto !important;
-  }
-
-  .stat-pill {
-    padding: 11px 13px !important;
-  }
-}
-
-@media (max-width: 768px) {
-  #hero {
-    padding-top: 100px !important;
-    padding-bottom: 36px !important;
-  }
-
-  .hero-title .line-small {
-    margin-bottom: 11px !important;
-  }
-
-  .hero-sub {
-    margin-top: 2px !important;
-  }
-}
-
-@media (max-width: 600px) {
-  #hero {
-    padding-top: 92px !important;
-    padding-bottom: 34px !important;
-  }
-
-  .hero-inner {
-    gap: 20px !important;
-  }
-
-  .hero-title {
-    margin-bottom: 12px !important;
-  }
-
-  .hero-title .line-small {
-    padding: 6px 10px !important;
-    margin-bottom: 10px !important;
-  }
-
-  .hero-visual > div,
-  .hero-stats {
-    width: min(255px, 100%) !important;
-    max-width: 255px !important;
-  }
-
-  .stat-pill {
-    padding: 10px 12px !important;
-  }
-
-  .stat-pill .sv {
-    font-size: 1.02rem !important;
-  }
-
-  .stat-pill .sl {
-    font-size: 0.57rem !important;
-  }
-}
-
-@media (max-width: 420px) {
-  #hero {
-    padding-top: 88px !important;
-  }
-
-  .hero-visual > div,
-  .hero-stats {
-    width: min(240px, 100%) !important;
-    max-width: 240px !important;
-  }
-}
-
-/* ================================================================
    GALERIA v3 — limit 4 zdjęć tylko na telefonach i tabletach
 ================================================================ */
 @media (max-width: 960px) {
@@ -2210,7 +1224,7 @@ nav.scrolled + .mobile-menu {
 }
 
 /* ================================================================
-   POPRAWKI — hero, footer i przycisk telefoniczny iOS
+   POPRAWKI — footer i przycisk telefoniczny iOS
 ================================================================ */
 
 /* Footer: znaczniki listy wyśrodkowane względem tekstu */
@@ -2246,103 +1260,9 @@ nav.scrolled + .mobile-menu {
   transform: translateY(0) !important;
 }
 
-
-
-/* ================================================================
-   POPRAWKI — lepszy układ hero i hasła kruszywa
-================================================================ */
-.hero-badge {
-  width: fit-content;
-  max-width: 100%;
-  margin-bottom: 18px;
-  padding: 8px 16px;
-  border-radius: 999px;
-  background: rgba(245,166,35,0.15);
-  border: 1px solid rgba(245,166,35,0.62);
-  color: var(--yellow-light);
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.24);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-.hero-badge::before {
-  content: '';
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  margin-right: 9px;
-  border-radius: 50%;
-  background: var(--yellow);
-  box-shadow: 0 0 0 5px rgba(245,166,35,0.18);
-  vertical-align: 1px;
-}
-
-.hero-sub {
-  max-width: 620px;
-  padding-left: 18px;
-  border-left: 3px solid rgba(245,166,35,0.78);
-  color: rgba(255,255,255,0.84);
-}
-
-@media (max-width: 960px) {
-  .hero-badge {
-    margin-bottom: 13px !important;
-    padding: 7px 13px !important;
-    font-size: 0.66rem !important;
-    letter-spacing: 1px !important;
-  }
-
-  .hero-sub {
-    padding-left: 13px !important;
-    border-left-width: 2px !important;
-  }
-}
-
-@media (max-width: 420px) {
-  .hero-badge {
-    font-size: 0.61rem !important;
-    letter-spacing: 0.75px !important;
-  }
-}
-
-
-
-
 /* ================================================================
    ANCHOR / SCROLL PERFORMANCE FIX
-   Only scroll behavior is changed here. Text/card/gallery reveal
-   animations stay untouched.
 ================================================================ */
-html {
-  scroll-behavior: auto !important;
-}
-
-section[id],
-#hero,
-#uslugi,
-#obszar,
-#galeria,
-#cennik,
-#kontakt {
-  scroll-margin-top: 92px;
-}
-
-@media (max-width: 960px) {
-  section[id],
-  #hero,
-  #uslugi,
-  #obszar,
-  #galeria,
-  #cennik,
-  #kontakt {
-    scroll-margin-top: 72px;
-  }
-}
 
 .nav-links a,
 .mobile-menu a,
@@ -2351,111 +1271,31 @@ section[id],
   -webkit-tap-highlight-color: transparent;
 }
 
-
-/* ================================================================
-   2026-06-17 — usunięcie kart statystyk i badge na mobile/tablet,
-   nowy tekst nad nagłówkiem hero na ekranach ≤960px
-================================================================ */
-
-/* domyślnie (desktop): pokazujemy stary badge, chowamy nowy */
-.hero-badge-mobile { display: none; }
-
-@media (max-width: 960px) {
-  /* karty: 100% naturalne kruszywo / VAT / Podlasie / Skieblewo — schowane */
-  .hero-stats {
-    display: none !important;
-  }
-
-  /* stary badge "Kruszywo prosto ze żwirowni" — schowany */
-  .hero-badge-desktop {
-    display: none !important;
-  }
-
-  /* nowy badge z tekstem o tradycji — widoczny w jego miejscu */
-  .hero-badge-mobile {
-    display: inline-flex !important;
-  }
-
-  /* skoro karty zniknęły, hero-visual nie musi rezerwować dla nich miejsca */
-  .hero-visual {
-    display: none !important;
-  }
+/* FIX: iPhone/Safari automatyczne niebieskie linki na numerach */
+a[x-apple-data-detectors],
+a[x-apple-data-detectors]:link,
+a[x-apple-data-detectors]:visited,
+a[x-apple-data-detectors]:hover,
+a[x-apple-data-detectors]:active {
+  color: inherit !important;
+  text-decoration: none !important;
+  font: inherit !important;
+  -webkit-text-decoration-color: transparent !important;
 }
 
-/* ================================================================
-   2026-06-17 — usuniecie badge i kart statystyk na mobile/tablet,
-   nowy tekst pod tytulem hero na ekranach <=960px
-================================================================ */
-
-/* domyslnie (desktop) blok mobilny jest schowany */
-.hero-mobile-tagline {
-  display: none;
+/* Dodatkowo dla stopki */
+footer a,
+footer a:visited,
+footer a[x-apple-data-detectors],
+footer a[x-apple-data-detectors]:visited {
+  color: inherit !important;
+  text-decoration: none !important;
 }
 
 @media (max-width: 960px) {
-  /* karty: 100% naturalne kruszywo / VAT / Podlasie / Skieblewo — schowane */
-  .hero-stats {
-    display: none !important;
-  }
-
-  /* caly hero-visual (kolumna z kartami) nie zajmuje miejsca */
-  .hero-visual {
-    display: none !important;
-  }
-
-  /* stary badge "Kruszywo prosto ze zwirowni" nad tytulem — schowany w ogole */
-  .hero-badge {
-    display: none !important;
-  }
-
-  /* nowy, zwykly tekst pod tytulem hero, bez ramki/pilla */
-  .hero-mobile-tagline {
-    display: block !important;
-    margin-top: 18px;
-    margin-bottom: 22px;
-  }
-
-  .hero-mobile-tagline .hmt-main {
-    font-family: 'Nunito', sans-serif;
-    font-size: clamp(0.95rem, 3.6vw, 1.12rem);
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.4;
-    margin: 0 0 10px 0;
-  }
-
-  .hero-mobile-tagline .hmt-sub {
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.4px;
-    color: rgba(255,255,255,0.62);
-    margin: 0;
+  .leaflet-top.leaflet-right .leaflet-control button {
+    font-size: 0.45rem !important;
+    padding: 5px 10px !important;
+    letter-spacing: 0.6px !important;
   }
 }
-
-@media (max-width: 600px) {
-  .hero-mobile-tagline {
-    margin-top: 14px;
-    margin-bottom: 18px;
-  }
-
-  .hero-mobile-tagline .hmt-main {
-    font-size: 0.92rem;
-    margin-bottom: 8px;
-  }
-
-  .hero-mobile-tagline .hmt-sub {
-    font-size: 0.78rem;
-  }
-}
-
-
-/* Animacja pojawiania się tekstu "Kruszywo prosto ze żwirowni" */
-.hero-mobile-tagline .hmt-main {
-  opacity: 0;
-  transform: translateY(18px);
-  animation: fadeUp 0.7s 0.18s ease both;
-}
-
-
